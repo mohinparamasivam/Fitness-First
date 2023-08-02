@@ -24,6 +24,7 @@ namespace Fitness_First
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,14 +44,16 @@ namespace Fitness_First
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication(); //redirecto to Login Page
 
-            app.UseAuthorization();
+            app.UseAuthorization(); // check user permission
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
