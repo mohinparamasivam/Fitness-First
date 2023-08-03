@@ -451,3 +451,4 @@ C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\bin\Debug\netcoreapp3.1\MailKit.dll
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\bin\Debug\netcoreapp3.1\MimeKit.dll
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Fitness_First.Areas.Identity.Data;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Fitness_First.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Fitness_First.Areas.Identity.Pages.Account
 {
@@ -22,7 +20,7 @@ namespace Fitness_First.Areas.Identity.Pages.Account
         private readonly SignInManager<Fitness_FirstUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<Fitness_FirstUser> signInManager, 
+        public LoginModel(SignInManager<Fitness_FirstUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<Fitness_FirstUser> userManager)
         {
@@ -84,8 +82,18 @@ namespace Fitness_First.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    // Check if the user is an admin (AdminCount = 1)
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if (user.AdminCount == 1)
+                    {
+                        // Redirect to Admin/Index
+                        return RedirectToAction("Index", "Admin");
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
