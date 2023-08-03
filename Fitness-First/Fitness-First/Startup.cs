@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
+using MimeKit;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Fitness_First
 {
@@ -25,6 +28,9 @@ namespace Fitness_First
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            // Configure Mailtrap as the email sender
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<MailtrapSettings>(Configuration.GetSection("MailtrapSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

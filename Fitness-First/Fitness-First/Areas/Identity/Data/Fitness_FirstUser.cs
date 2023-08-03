@@ -9,5 +9,6 @@ namespace Fitness_First.Areas.Identity.Data
     // Add profile data for application users by adding properties to the Fitness_FirstUser class
     public class Fitness_FirstUser : IdentityUser
     {
+        public int AdminCount { get; internal set; }
     }
 }
