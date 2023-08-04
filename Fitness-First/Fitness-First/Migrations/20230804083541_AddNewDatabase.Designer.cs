@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fitness_First.Migrations
 {
     [DbContext(typeof(Fitness_FirstContext))]
-    [Migration("20230803033343_addNewDatabase")]
-    partial class addNewDatabase
+    [Migration("20230804083541_AddNewDatabase")]
+    partial class AddNewDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace Fitness_First.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AdminCount")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")

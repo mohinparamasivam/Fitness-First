@@ -1,9 +1,11 @@
 ﻿using System;
+using Fitness_First.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fitness_First.Migrations
 {
-    public partial class addNewDatabase : Migration
+    public partial class AddNewDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +41,8 @@ namespace Fitness_First.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    AdminCount = table.Column<int>(nullable: false, defaultValue: 0) // Add AdminCount column with default value 0
                 },
                 constraints: table =>
                 {
@@ -190,6 +193,8 @@ namespace Fitness_First.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+            // Seed method
+            SeedData(migrationBuilder);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -214,6 +219,34 @@ namespace Fitness_First.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+        }
+
+        private void SeedData(MigrationBuilder migrationBuilder)
+        {
+            // Create a default admin user with AdminCount = 1
+            var adminEmail = "admin@fitness-first.com";
+            var adminPassword = "Admin@123";
+            var normalizedusername = adminEmail.ToUpper();
+
+            var user = new Fitness_FirstUser
+            {
+                UserName = adminEmail,
+                Email = adminEmail,
+                EmailConfirmed = true,
+                AdminCount = 1,
+                NormalizedUserName = normalizedusername,
+                NormalizedEmail = normalizedusername
+            };
+
+            var passwordHasher = new PasswordHasher<Fitness_FirstUser>();
+            var hashedPassword = passwordHasher.HashPassword(user, adminPassword);
+
+            user.PasswordHash = hashedPassword;
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "UserName", "NormalizedUserName", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount", "AdminCount" },
+                values: new object[] { user.Id, user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.PasswordHash, user.SecurityStamp, user.ConcurrencyStamp, user.PhoneNumber, user.PhoneNumberConfirmed, user.TwoFactorEnabled, user.LockoutEnd, user.LockoutEnabled, user.AccessFailedCount, user.AdminCount });
         }
     }
 }
