@@ -19,6 +19,41 @@ html {
 
 body {
     min-height: 100vh;
+
+}
+
+.login-partial-container {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Custom CSS for the menu dropdown */
+.menu-image {
+    width: 40px;
+    height: 40px;
+}
+/* Remove grey fill from the 'no-fill' button */
+.no-fill {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+/* Remove grey fill from Bootstrap buttons */
+.btn-secondary:not(.no-fill):not(.btn-link):not(:disabled):not(.disabled):active, .btn-secondary:not(.no-fill):not(.btn-link):not(:disabled):not(.disabled).active,
+.show > .btn-secondary.dropdown-toggle {
+    background-color: transparent;
+}
+
+/* Style for the cart icon */
+#cart {
+    margin-top: -5px;
+}
+
+
+.navbar .dropdown {
+    position: absolute;
+    left:0 ;
 }
 
 /*footer*/
@@ -141,7 +176,6 @@ sectionfooter {
             .footer-distributed .footer-center p a {
                 color: lightseagreen;
                 text-decoration: none;
-                ;
             }
 
     .footer-distributed .footer-links a:before {
