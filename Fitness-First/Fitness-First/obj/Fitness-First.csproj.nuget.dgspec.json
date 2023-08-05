@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {}
+    "C:\\Users\\Rin\\source\\repos\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {
+    "C:\\Users\\Rin\\source\\repos\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
+        "projectUniqueName": "C:\\Users\\Rin\\source\\repos\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
         "projectName": "Fitness-First",
-        "projectPath": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
-        "packagesPath": "C:\\Users\\Roy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\obj\\",
+        "projectPath": "C:\\Users\\Rin\\source\\repos\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
+        "packagesPath": "C:\\Users\\Rin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Rin\\source\\repos\\Fitness-First\\Fitness-First\\Fitness-First\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Roy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -95,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

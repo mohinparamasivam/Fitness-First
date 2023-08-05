@@ -1827,3 +1827,6 @@ C:\Users\Roy\Fitness-First\Fitness-First\Fitness-First\obj\Debug\netcoreapp3.1\F
 C:\Users\Roy\Fitness-First\Fitness-First\Fitness-First\obj\Debug\netcoreapp3.1\Fitness-First.dll
 C:\Users\Roy\Fitness-First\Fitness-First\Fitness-First\obj\Debug\netcoreapp3.1\Fitness-First.pdb
 C:\Users\Roy\Fitness-First\Fitness-First\Fitness-First\obj\Debug\netcoreapp3.1\Fitness-First.genruntimeconfig.cache
+C:\Users\Rin\source\repos\Fitness-First\Fitness-First\Fitness-First\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml.g.cs
+C:\Users\Rin\source\repos\Fitness-First\Fitness-First\Fitness-First\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_UserLayout.cshtml.g.cs
+C:\Users\Rin\source\repos\Fitness-First\Fitness-First\Fitness-First\obj\Debug\netcoreapp3.1\Razor\Views\User\Index.cshtml.g.cs
