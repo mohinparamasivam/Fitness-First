@@ -21,8 +21,34 @@ body {
     min-height: 100vh;
 }
 
+
+.navbar-nav li {
+    display: inline-block;
+    align-items: center;
+}
+
+
+
+
+#cart img {
+    margin-top: -5px; /* Adjust this value to position the cart icon up or down */
+}
+
 /*footer*/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
+
+
+/* Adjust the positioning of the dropdown button */
+.dropdown {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+/* Adjust the position of the dropdown menu */
+.dropdown-menu {
+    left: -10px;
+}
 
 * {
     font-family: Open Sans;
@@ -141,7 +167,7 @@ sectionfooter {
             .footer-distributed .footer-center p a {
                 color: lightseagreen;
                 text-decoration: none;
-                ;
+                
             }
 
     .footer-distributed .footer-links a:before {
@@ -153,6 +179,8 @@ sectionfooter {
         display: inline-block;
         padding-right: 5px;
     }
+
+
 
     .footer-distributed .footer-links .link-1:before {
         content: none;
