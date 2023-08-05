@@ -87,8 +87,14 @@ namespace Fitness_First.Areas.Identity.Pages.Account
                     var user = await _userManager.FindByEmailAsync(Input.Email);
                     if (user.AdminCount == 1)
                     {
-                        // Redirect to Admin/Index
+                        // Redirect to Admin/Index (Admin HomePage)
                         return RedirectToAction("Index", "Admin");
+                    }
+
+                    else if (user.AdminCount == 0)
+                    {
+                        // Redirect to User/Index (User HomePage)
+                        return RedirectToAction("Index", "User");
                     }
 
                     return LocalRedirect(returnUrl);
