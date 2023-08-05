@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Roy\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {}
+    "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Roy\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {
+    "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Roy\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
+        "projectUniqueName": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
         "projectName": "Fitness-First",
-        "projectPath": "C:\\Users\\Roy\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
+        "projectPath": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
         "packagesPath": "C:\\Users\\Roy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Roy\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\obj\\",
+        "outputPath": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
