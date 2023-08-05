@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mohin Paramasivam\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {}
+    "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mohin Paramasivam\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {
+    "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mohin Paramasivam\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
+        "projectUniqueName": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
         "projectName": "Fitness-First",
-        "projectPath": "C:\\Users\\Mohin Paramasivam\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
-        "packagesPath": "C:\\Users\\Mohin Paramasivam\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mohin Paramasivam\\Desktop\\Fitness-First\\Fitness-First\\Fitness-First\\obj\\",
+        "projectPath": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\Fitness-First.csproj",
+        "packagesPath": "C:\\Users\\Roy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Roy\\Fitness-First\\Fitness-First\\Fitness-First\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Mohin Paramasivam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Roy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

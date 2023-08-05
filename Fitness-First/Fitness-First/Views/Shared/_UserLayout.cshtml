@@ -11,42 +11,44 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <!-- Dropdown Box -->
-                <div class="dropdown ml-auto">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Menu
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index">Home</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="ViewTimeTable">TimeTable</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="ViewPackages">Packages</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="ViewProducts">Products</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="ViewTrainers">Trainers</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="ViewEquipments">Gym Equipments</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="ViewPurchaseSummary">Purchase Summary</a>
-                    </div>
-                </div>
-                <!-- End Dropdown Box -->
-                <!-- Fitness_First logo with Home and Contact Us links -->
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    Fitness_First
-                </a>
-
-                <!-- Add "Home" and "Contact Us" links directly within the navbar -->
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
-                    </li>
-                </ul>
-
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Fitness_First</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <partial name="_LoginPartial" /> <!-- Include Login Page Navigation Bar into this page template -->
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewPurchase">TimeTable</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="PackagePurchase">Packages</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewPurchase">Products</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewTrainers">Trainers</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewPurchase">Gym Equipments</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewPurchase">Order Summary</a>
+                        </li>
+
+                    </ul> 
+                </div>
+                <partial name="_LoginPartial" /> <!--Include Login Page Navigation Bar into this page template-->
             </div>
         </nav>
     </header>
@@ -56,55 +58,11 @@
         </main>
     </div>
 
-    <footer class="footer-distributed">
-        <div class="footer-left">
-            <h3>Fitness<span>First</span></h3>
-            <p class="footer-links">
-                <a href="#" class="link-1">Home</a>
-                <a href="#">About US</a>
-                <a href="#">Contact Us</a>
-                <a href="#">Login</a>
-                <a href="#">Register</a>
-            </p>
-            <p class="footer-company-name"> Copyright © 2023, Fitness First. All Rights Reserved.</p>
-        </div>
-
-        <div class="footer-center">
-            <div>
-                <i class="fa fa-map-marker"></i>
-                <p><span>Jalan Teknologi 5,</span> Taman Teknologi Malaysia, 57000 Kuala Lumpur, </p>
-            </div>
-
-            <div>
-                <i class="fa fa-phone"></i>
-                <p>+1.555.555.5555</p>
-            </div>
-
-            <div>
-                <i class="fa fa-envelope"></i>
-                <p><a href="mailto:contact@fitness-first.com">contact@fitness-first.com</a></p>
-            </div>
-        </div>
-
-        <div class="footer-right">
-            <p class="footer-company-about">
-                <span>About the company</span>
-                Change for the better. Join now to enjoy our new membership offer and get 30 days free gym access.
-            </p>
-            <div class="footer-register-button">
-                <a href="/Identity/Account/Register">
-                    <button type="button" class="btn-register">Register</button>
-                </a>
-            </div>
-            <div class="footer-icons">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-                <a href="#"><i class="fa fa-github"></i></a>
-            </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Fitness-First - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
