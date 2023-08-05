@@ -28,7 +28,7 @@ body {
     font-family: Open Sans;
 }
 
-section {
+sectionfooter {
     width: 100%;
     display: inline-block;
     background: #333;
@@ -221,17 +221,21 @@ section {
             }
 }
 
+.footer-distributed .footer-input-box {
+    padding-top: 20px;
+}
+
 .footer-distributed {
     /*position: absolute;*/
     bottom: 0;
     width: 100%;
 }
 
-    .footer-distributed .footer-register-button {
+    .footer-distributed .footer-subscribe-button {
         margin-top: 15px; /* Adjust the margin as needed */
     }
 
-    .footer-distributed .btn-register {
+    .footer-distributed .btn-subscribe {
         background-color: red; /* Change the background color to red */
         color: #ffffff; /* Set the text color to white */
         font-size: 18px; /* Increase the font size to make the button bigger */
@@ -242,6 +246,6 @@ section {
     }
 
         /* On hover effect (optional) */
-        .footer-distributed .btn-register:hover {
+        .footer-distributed .btn-subscribe:hover {
             opacity: 0.8; /* Reduce opacity on hover for a slight effect */
         }
