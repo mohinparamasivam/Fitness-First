@@ -6,27 +6,51 @@
     <title>@ViewData["Title"] - Fitness-First</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Fitness_First</a>
+                <!-- Dropdown Box -->
+                <div class="dropdown ml-auto">
+                    <a class="btn btn-secondary dropdown-toggle no-fill" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="~/images/menu.png" alt="Menu" class="menu-image" />
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-menu-main">
+                            <a class="dropdown-item main-option" href="#">Packages</a>
+                            <div class="dropdown-menu-submenu">
+                                <a class="dropdown-item sub-option" href="#">Edit Packages</a>
+                            </div>
+                        </div>
+                        <a class="dropdown-item main-option" href="#">Products</a>
+                        <a class="dropdown-item main-option" href="#">Gym Equipments</a>
+                        <a class="dropdown-item main-option" href="#">Revenue Summary</a>
+                    </div>
+                </div>
+                <!-- End Dropdown Box -->
+                <!-- Fitness_First logo with Home and Contact Us links -->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    Fitness-First
+                </a>
+
+                <!-- Add "Home" and "Contact Us" links directly within the navbar -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+                    </li>
+                </ul>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul> 
-                </div>
-                <partial name="_LoginPartial" /> <!--Include Login Page Navigation Bar into this page template-->
+                <!-- Add "LoginPartial" to include the Login Page Navigation Bar -->
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
@@ -35,15 +59,109 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Fitness-First - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <br>
+    <br />
+    <br></br>
+    <footer class="footer-distributed">
+        <div class="footer-left">
+            <h3>Fitness<span>First</span></h3>
+            <p class="footer-links">
+                <a href="#" class="link-1">Home</a>
+                <a href="#">About US</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Login</a>
+                <a href="#">Register</a>
+            </p>
+            <p class="footer-company-name"> Copyright © 2023, Fitness First. All Rights Reserved.</p>
         </div>
+
+        <div class="footer-center">
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>Jalan Teknologi 5,</span> Taman Teknologi Malaysia, 57000 Kuala Lumpur, </p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+03-8729-2862</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:contact@fitness-first.com">contact@fitness-first.com</a></p>
+            </div>
+        </div>
+
+        <div class="footer-right">
+            <p class="footer-company-about">
+                <span>Subscribe For Newsletters</span>
+                Change for the better. Join now to enjoy our new membership offer and get 30 days free gym access.
+            </p>
+            <div class="footer-input-box">
+                <!-- Added div for the input box -->
+                <input type="email" placeholder="Enter your email" class="input-email"> <!-- Input box for email -->
+            </div>
+            <br />
+            <div class="footer-subscribe-button">
+                <button type="button" class="btn-subscribe">Subscribe</button>
+            </div>
+            <div class="footer-icons">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+            </div>
+        </div>
+
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+
+    <style>
+        /* CSS to position the Edit Packages submenu */
+        .dropdown-menu-main {
+            display: flex;
+            align-items: center;
+            position: relative; /* Add position relative to the Packages dropdown container */
+        }
+
+        .dropdown-menu-submenu {
+            position: absolute;
+            top: calc(100% + 5px); /* Move the submenu down by 5 pixels */
+            left: 100%; /* Adjust the left position to move the submenu to the right */
+            display: none;
+            background-color: #f0f0f0; /* Light grey background color */
+            border: 1px solid #ddd; /* Optional border for visual appeal */
+            min-width: 200px; /* Adjust the width as needed */
+            z-index: 1; /* Ensures the submenu is on top of other elements */
+        }
+
+            .main-option:focus + .dropdown-menu-submenu,
+            .dropdown-menu-submenu:focus {
+                display: block;
+            }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            // Handle click on "Packages" dropdown
+            $(".main-option").click(function (e) {
+                e.stopPropagation(); // Prevent default dropdown behavior
+                var packagesDropdown = $(".main-option")[0].getBoundingClientRect();
+                var topPosition = packagesDropdown.bottom + 5; /* Add 5 pixels to move the submenu down */
+                var leftPosition = packagesDropdown.right; /* Use the right position to move the submenu to the right */
+                $(".dropdown-menu-submenu").css({ top: topPosition, left: leftPosition }); // Position "Edit Packages" dropdown
+                $(".dropdown-menu-submenu").toggle(); // Toggle the "Edit Packages" dropdown
+            });
+
+            // Hide the submenu when clicking outside
+            $(document).click(function () {
+                $(".dropdown-menu-submenu").hide();
+            });
+        });
+    </script>
+
 </body>
 </html>
