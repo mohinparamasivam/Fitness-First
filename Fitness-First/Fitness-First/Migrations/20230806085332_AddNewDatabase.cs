@@ -50,23 +50,6 @@ namespace Fitness_First.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GymPackages",
-                columns: table => new
-                {
-                    PackageID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PackageName = table.Column<string>(nullable: true),
-                    PackagePrice = table.Column<float>(nullable: false),
-                    TimeSlots = table.Column<DateTime>(nullable: false),
-                    InstructorName = table.Column<string>(nullable: true),
-                    PackagePicturePath = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GymPackages", x => x.PackageID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -210,6 +193,8 @@ namespace Fitness_First.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+            // Seed method
+            SeedData(migrationBuilder);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -228,9 +213,6 @@ namespace Fitness_First.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "GymPackages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
