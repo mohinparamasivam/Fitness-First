@@ -20,13 +20,28 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <div class="dropdown-menu-main">
                             <a class="dropdown-item main-option" href="#">Packages</a>
-                            <div class="dropdown-menu-submenu">
-                                <a class="dropdown-item sub-option" href="#">Edit Packages</a>
+                            <div class="dropdown-menu-submenu packages-submenu">
+                                <a class="dropdown-item sub-option" asp-area="" asp-controller="Admin" asp-action="AddPackages">Add Packages</a>
+                                <a class="dropdown-item sub-option" asp-area="" asp-controller="Admin" asp-action="EditPackages">Edit Packages</a>
                             </div>
                         </div>
-                        <a class="dropdown-item main-option" href="#">Products</a>
-                        <a class="dropdown-item main-option" href="#">Gym Equipments</a>
-                        <a class="dropdown-item main-option" href="#">Revenue Summary</a>
+                        <div class="dropdown-menu-main">
+                            <a class="dropdown-item main-option" href="#">Products</a>
+                            <div class="dropdown-menu-submenu products-submenu">
+                                <a class="dropdown-item sub-option" asp-area="" asp-controller="Admin" asp-action="AddProducts">Add Products</a>
+                                <a class="dropdown-item sub-option" asp-area="" asp-controller="Admin" asp-action="EditProducts">Edit Products</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-menu-main">
+                            <a class="dropdown-item main-option" href="#">Gym Equipments</a>
+                            <div class="dropdown-menu-submenu products-submenu">
+                                <a class="dropdown-item sub-option" asp-area="" asp-controller="Admin" asp-action="AddEquipments">Add Equipments</a>
+                                <a class="dropdown-item sub-option" asp-area="" asp-controller="Admin" asp-action="EditEquipments">Edit Equipments</a>
+                            </div>
+                        </div>
+
+                        <a class="dropdown-item sub-option" asp-area="" asp-controller="Admin" asp-action="RevenueSummary">Revenue Summary</a>
                     </div>
                 </div>
                 <!-- End Dropdown Box -->
@@ -34,7 +49,6 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     Fitness-First
                 </a>
-
                 <!-- Add "Home" and "Contact Us" links directly within the navbar -->
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
@@ -44,7 +58,6 @@
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                     </li>
                 </ul>
-
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -120,45 +133,54 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <style>
-        /* CSS to position the Edit Packages submenu */
+        /* CSS to position the Edit Packages and Edit Products submenus */
         .dropdown-menu-main {
             display: flex;
             align-items: center;
-            position: relative; /* Add position relative to the Packages dropdown container */
+            position: relative;
         }
 
         .dropdown-menu-submenu {
             position: absolute;
-            top: calc(100% + 5px); /* Move the submenu down by 5 pixels */
-            left: 100%; /* Adjust the left position to move the submenu to the right */
+            top: 0;
+            left: 100%;
             display: none;
-            background-color: #f0f0f0; /* Light grey background color */
-            border: 1px solid #ddd; /* Optional border for visual appeal */
-            min-width: 200px; /* Adjust the width as needed */
-            z-index: 1; /* Ensures the submenu is on top of other elements */
+            /*background-color: #f0f0f0;*/ /* Color for the SubMenu Button DropDown*/
+            border: 1px solid #ddd;
+            min-width: 200px;
+            z-index: 1;
         }
 
-            .main-option:focus + .dropdown-menu-submenu,
-            .dropdown-menu-submenu:focus {
-                display: block;
-            }
+        /* Show the submenu for the main dropdown menu clicked */
+        .packages-submenu.show,
+        .products-submenu.show {
+            display: block;
+        }
+
+        /* Position the submenus to the right */
+        .packages-submenu {
+            left: 100%;
+            top: 0;
+        }
+
+        .products-submenu {
+            left: 100%;
+            top: 0;
+        }
     </style>
 
     <script>
         $(document).ready(function () {
             // Handle click on "Packages" dropdown
             $(".main-option").click(function (e) {
-                e.stopPropagation(); // Prevent default dropdown behavior
-                var packagesDropdown = $(".main-option")[0].getBoundingClientRect();
-                var topPosition = packagesDropdown.bottom + 5; /* Add 5 pixels to move the submenu down */
-                var leftPosition = packagesDropdown.right; /* Use the right position to move the submenu to the right */
-                $(".dropdown-menu-submenu").css({ top: topPosition, left: leftPosition }); // Position "Edit Packages" dropdown
-                $(".dropdown-menu-submenu").toggle(); // Toggle the "Edit Packages" dropdown
+                e.stopPropagation();
+                $(".dropdown-menu-submenu").removeClass("show"); // Hide all submenus
+                $(this).next(".dropdown-menu-submenu").toggleClass("show"); // Toggle the clicked submenu
             });
 
             // Hide the submenu when clicking outside
             $(document).click(function () {
-                $(".dropdown-menu-submenu").hide();
+                $(".dropdown-menu-submenu").removeClass("show");
             });
         });
     </script>
