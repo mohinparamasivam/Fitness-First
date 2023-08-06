@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fitness_First.Migrations
 {
     [DbContext(typeof(Fitness_FirstContext))]
-    [Migration("20230806091004_AddGymEquipmentsTable")]
-    partial class AddGymEquipmentsTable
+    [Migration("20230806093903_GymEquipmentsTable")]
+    partial class GymEquipmentsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,7 +89,7 @@ namespace Fitness_First.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Fitness_First.Models.GymPackages", b =>
+            modelBuilder.Entity("Fitness_First.Models.GymPackage", b =>
                 {
                     b.Property<int>("PackageID")
                         .ValueGeneratedOnAdd()
@@ -113,7 +113,7 @@ namespace Fitness_First.Migrations
 
                     b.HasKey("PackageID");
 
-                    b.ToTable("GymPackages");
+                    b.ToTable("GymPackage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

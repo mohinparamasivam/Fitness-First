@@ -87,7 +87,7 @@ namespace Fitness_First.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Fitness_First.Models.GymPackages", b =>
+            modelBuilder.Entity("Fitness_First.Models.GymPackage", b =>
                 {
                     b.Property<int>("PackageID")
                         .ValueGeneratedOnAdd()
@@ -111,7 +111,7 @@ namespace Fitness_First.Migrations
 
                     b.HasKey("PackageID");
 
-                    b.ToTable("GymPackages");
+                    b.ToTable("GymPackage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualBasic;
+﻿using System.ComponentModel.DataAnnotations;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Fitness_First.Models
 {
-    public class GymPackages
+    public class GymPackage
     {
+
         [Key] //primary key for column below
         public int PackageID { get; set; }
 
@@ -18,8 +18,5 @@ namespace Fitness_First.Models
         public string InstructorName { get; set; }
 
         public string PackagePicturePath { get; set; }
-
-       
-
     }
 }
