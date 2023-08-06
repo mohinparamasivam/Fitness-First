@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Fitness_First.Models
 {
     public class GymPackage
     {
-
-        [Key] //primary key for column below
+        [Key]
         public int PackageID { get; set; }
 
         public string PackageName { get; set; }

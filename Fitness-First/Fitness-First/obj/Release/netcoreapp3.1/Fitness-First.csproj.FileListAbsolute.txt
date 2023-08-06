@@ -437,6 +437,7 @@ C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
+C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\AddPackages.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs

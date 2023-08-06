@@ -23,6 +23,11 @@ namespace Fitness_First.Controllers
             return View();
         }
 
+        public IActionResult AddPackages()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

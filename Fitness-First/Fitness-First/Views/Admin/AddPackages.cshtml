@@ -1,0 +1,51 @@
+﻿@model Fitness_First.Models.GymPackage
+
+@{
+    ViewData["Title"] = "Add New Packages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<center><h1>Add New Package</h1></center>
+<!-- Add your admin-specific content here -->
+
+<div class="container mt-4">
+    <form asp-controller="Admin" asp-action="AddPackage" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="PackageName">Package Name</label>
+            <input type="text" class="form-control" id="PackageName" name="PackageName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="PackagePrice">Package Price</label>
+            <input type="number" step="0.01" class="form-control" id="PackagePrice" name="PackagePrice" required>
+        </div>
+
+        <div class="form-group">
+            <label for="InstructorName">Instructor Name</label>
+            <input type="text" class="form-control" id="InstructorName" name="InstructorName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="PackagePicturePath">Package Picture</label>
+            <input type="file" class="form-control-file" id="PackagePicturePath" name="PackagePicturePath">
+        </div>
+
+        <div class="form-group">
+            <label>Time Slots <b>(8 Sessions Per Month) : </b></label>
+            <br /> <br />
+            <ul>
+                @for (int week = 1; week <= 4; week++)
+                {
+                    <li>
+                        <h4>Week @week</h4>
+
+                        <input type="datetime-local" class="form-control" name="TimeSlots" required>
+                        <input type="datetime-local" class="form-control" name="TimeSlots" required>
+                        <br>
+                    </li>
+                }
+            </ul>
+        </div>
+       <center> <button type="submit" class="btn btn-primary">Add Package</button></center>
+    </form>
+</div>
