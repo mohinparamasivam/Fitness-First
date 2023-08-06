@@ -16,6 +16,8 @@ namespace Fitness_First.Data
         {
         }
 
+        public DbSet<Fitness_First.Models.GymPackages> GymPackages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
