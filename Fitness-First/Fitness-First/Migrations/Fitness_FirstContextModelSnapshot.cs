@@ -87,7 +87,7 @@ namespace Fitness_First.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Fitness_First.Models.GymPackage", b =>
+            modelBuilder.Entity("Fitness_First.Models.GymPackages", b =>
                 {
                     b.Property<int>("PackageID")
                         .ValueGeneratedOnAdd()
@@ -103,15 +103,36 @@ namespace Fitness_First.Migrations
                     b.Property<string>("PackagePicturePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("PackagePrice")
-                        .HasColumnType("real");
+                    b.Property<double>("PackagePrice")
+                        .HasColumnType("float");
 
-                    b.Property<DateTime>("TimeSlots")
+                    b.Property<DateTime>("Session1")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Session2")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Session3")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Session4")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Session5")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Session6")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Session7")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Session8")
                         .HasColumnType("datetime2");
 
                     b.HasKey("PackageID");
 
-                    b.ToTable("GymPackage");
+                    b.ToTable("GymPackages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

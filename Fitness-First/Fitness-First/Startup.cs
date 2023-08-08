@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Fitness_First
 {
@@ -31,6 +32,13 @@ namespace Fitness_First
             // Configure Mailtrap as the email sender
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<MailtrapSettings>(Configuration.GetSection("MailtrapSettings"));
+
+            // Configure logging
+            services.AddLogging(loggingBuilder => 
+            {
+                loggingBuilder.AddConsole(); // Add console logging provider
+                                             // You can add more providers if needed, such as Debug, File, etc.
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
