@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Fitness_First.Models.GymPackages>
+
+@{
+    ViewData["Title"] = "Edit Packages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .card {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+    }
+
+        .card:hover {
+            filter: grayscale(100%);
+        }
+
+    .card-img-top {
+        transition: transform 0.3s;
+    }
+
+    .card:hover .card-img-top {
+        transform: scale(1.1);
+    }
+
+    .card-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff; /* Attractive text color */
+        font-size: 1.5em;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .card:hover .card-text {
+        opacity: 1;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content:center;
+        gap: 10px;
+        bottom: 0px;
+    }
+
+    .btn {
+        width: 120px;
+        height: 40px;
+        font-size: 1em;
+    }
+
+</style>
+
+<div class="container mt-4">
+    <center><h1>Edit Packages</h1></center>
+    <br /><br />
+    <div class="row">
+        @foreach (var package in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="~/uploads/@package.PackagePicturePath" class="card-img-top" alt="Package Image">
+                    <div class="card-text">
+                        @package.PackageName
+                    </div>
+                    <div class="card-body">
+                        <div class="btn-group" role="group">
+                            <a href="@Url.Action("EditPackage", new { id = package.PackageID })" class="btn btn-warning"><b>Edit</b></a>
+                            <a href="@Url.Action("DeletePackage", new { id = package.PackageID })" class="btn btn-primary"><b>Members</b></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

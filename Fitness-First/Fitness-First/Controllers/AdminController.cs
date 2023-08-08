@@ -64,7 +64,7 @@ namespace Fitness_First.Controllers
                         }
 
                         // Set the PackagePicturePath property before adding to the database
-                        gymPackages.PackagePicturePath = "/uploads/" + uniqueFileName;
+                        gymPackages.PackagePicturePath = "~/uploads/" + uniqueFileName;
                     }
 
                     _dbContext.GymPackages.Add(gymPackages);
@@ -84,6 +84,11 @@ namespace Fitness_First.Controllers
         }
 
 
+        public IActionResult EditPackages()
+        {
+            var packages = _dbContext.GymPackages.ToList(); // Retrieve the data from the database
+            return View("EditPackages", packages); // Pass the data to the "EditPackages" view
+        }
 
 
         public IActionResult Privacy()
