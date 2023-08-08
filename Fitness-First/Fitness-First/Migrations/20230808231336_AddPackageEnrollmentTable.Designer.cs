@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fitness_First.Migrations
 {
     [DbContext(typeof(Fitness_FirstContext))]
-    [Migration("20230808223412_AddPackageEnrollmentTable")]
+    [Migration("20230808231336_AddPackageEnrollmentTable")]
     partial class AddPackageEnrollmentTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,6 +170,9 @@ namespace Fitness_First.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EnrolledAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("InstructorName")
                         .HasColumnType("nvarchar(max)");

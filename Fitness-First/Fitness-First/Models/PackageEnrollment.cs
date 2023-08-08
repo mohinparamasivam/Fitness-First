@@ -5,7 +5,6 @@ namespace Fitness_First.Models
 {
     public class PackageEnrollment
     {
-
         [Key]
         public int EnrollmentID { get; set; }
 
@@ -18,6 +17,7 @@ namespace Fitness_First.Models
         public double PackagePrice { get; set; }
 
         public string InstructorName { get; set; }
+        public DateTime EnrolledAt { get; set; }
 
         public DateTime Session1 { get; set; }
         public DateTime Session2 { get; set; }
@@ -28,5 +28,6 @@ namespace Fitness_First.Models
         public DateTime Session7 { get; set; }
         public DateTime Session8 { get; set; }
 
+       
     }
 }

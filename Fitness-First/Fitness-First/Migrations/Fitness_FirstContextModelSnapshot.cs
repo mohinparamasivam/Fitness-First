@@ -169,6 +169,9 @@ namespace Fitness_First.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("EnrolledAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("InstructorName")
                         .HasColumnType("nvarchar(max)");
 
