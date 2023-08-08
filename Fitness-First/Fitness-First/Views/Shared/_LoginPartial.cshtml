@@ -14,6 +14,8 @@
 
         @if (SignInManager.IsSignedIn(User))
         {
+            var user = await UserManager.FindByNameAsync(User.Identity.Name);
+            var memberName = user?.MemberName;
 
             <li>
                 <a id="cart" class="nav-link" href="/Cart">
@@ -22,7 +24,7 @@
             </li>
 
             <li>
-                <a class="nav-link" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @UserManager.GetUserName(User)</a>
+                <a class="nav-link" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @memberName</a>
             </li>
             <li>
                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

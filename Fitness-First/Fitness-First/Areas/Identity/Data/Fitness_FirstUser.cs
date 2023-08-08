@@ -10,5 +10,6 @@ namespace Fitness_First.Areas.Identity.Data
     public class Fitness_FirstUser : IdentityUser
     {
         public int AdminCount { get; set; } // Add this property
+        public string MemberName { get; set; }
     }
 }

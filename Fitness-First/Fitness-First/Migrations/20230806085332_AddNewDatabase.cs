@@ -28,6 +28,7 @@ namespace Fitness_First.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    MemberName = table.Column<string>(maxLength: 256, nullable: true),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -227,6 +228,7 @@ namespace Fitness_First.Migrations
             var adminEmail = "admin@fitness-first.com";
             var adminPassword = "Admin@123";
             var normalizedusername = adminEmail.ToUpper();
+            var MemberName = "Admin";
 
             var user = new Fitness_FirstUser
             {
@@ -235,7 +237,8 @@ namespace Fitness_First.Migrations
                 EmailConfirmed = true,
                 AdminCount = 1,
                 NormalizedUserName = normalizedusername,
-                NormalizedEmail = normalizedusername
+                NormalizedEmail = normalizedusername,
+                MemberName = MemberName
             };
 
             var passwordHasher = new PasswordHasher<Fitness_FirstUser>();
@@ -245,8 +248,8 @@ namespace Fitness_First.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "UserName", "NormalizedUserName", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount", "AdminCount" },
-                values: new object[] { user.Id, user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.PasswordHash, user.SecurityStamp, user.ConcurrencyStamp, user.PhoneNumber, user.PhoneNumberConfirmed, user.TwoFactorEnabled, user.LockoutEnd, user.LockoutEnabled, user.AccessFailedCount, user.AdminCount });
+                columns: new[] { "Id", "UserName", "NormalizedUserName", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount", "AdminCount","MemberName" },
+                values: new object[] { user.Id, user.UserName, user.NormalizedUserName, user.Email, user.NormalizedEmail, user.EmailConfirmed, user.PasswordHash, user.SecurityStamp, user.ConcurrencyStamp, user.PhoneNumber, user.PhoneNumberConfirmed, user.TwoFactorEnabled, user.LockoutEnd, user.LockoutEnabled, user.AccessFailedCount, user.AdminCount,user.MemberName });
         }
     }
 }

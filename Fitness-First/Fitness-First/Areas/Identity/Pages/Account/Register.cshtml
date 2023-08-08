@@ -28,11 +28,19 @@
                 <div class="card-body">
                     <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label for="MemberName">Member Name</label>
+                            <input type="text" id="MemberName" asp-for="Input.MemberName" class="form-control" />
+                            <span asp-validation-for="Input.MemberName" class="text-danger"></span>
+                        </div>
+
                         <div class="form-group">
                             <label for="inputEmail">Email Address</label>
                             <input type="email" id="inputEmail" asp-for="Input.Email" class="form-control" />
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
+
                         <div class="form-group">
                             <label for="inputPassword">Password</label>
                             <input type="password" id="inputPassword" asp-for="Input.Password" class="form-control" />
