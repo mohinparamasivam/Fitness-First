@@ -18,6 +18,8 @@ namespace Fitness_First.Data
 
         public DbSet<Fitness_First.Models.GymPackages> GymPackages { get; set; }
 
+        public DbSet<Fitness_First.Models.Products> Products { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
