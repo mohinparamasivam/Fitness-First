@@ -166,7 +166,58 @@ namespace Fitness_First.Controllers
         }
 
 
+        public IActionResult AddProducts()
+        {
+            return View();
+        }
 
+
+        //function to add Products Data to database
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddProductsPostRequest(Products products, IFormFile productPicture)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {       //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+                    if (productPicture != null && productPicture.Length > 0)
+                    {
+                        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + productPicture.FileName;
+                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await productPicture.CopyToAsync(fileStream);
+                        }
+
+                        // Set the PackagePicturePath property before adding to the database
+                        products.ProductPicturePath = "~/uploads/" + uniqueFileName;
+                    }
+
+                    _dbContext.Products.Add(products);
+                    await _dbContext.SaveChangesAsync();
+                    return RedirectToAction("ViewProducts");
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception for debugging purposes
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    ModelState.AddModelError("", "An error occurred while processing the form.");
+                    return View("AddProducts", products);
+                }
+            }
+
+            return View("AddProducts", products);
+        }
+
+
+        public IActionResult ViewProducts()
+        {
+            var products = _dbContext.Products.ToList(); // Retrieve the data from the database
+            return View("ViewProducts", products); // Pass the data to the "EditPackages" view
+        }
 
 
 

@@ -460,3 +460,4 @@ C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\EditPackage.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\ViewPackages.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\AddProducts.cshtml.g.cs
+C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\ViewProducts.cshtml.g.cs

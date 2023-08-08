@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Fitness_First.Models.GymPackages>
+﻿@model IEnumerable<Fitness_First.Models.Products>
 
 @{
-    ViewData["Title"] = "View Packages";
+    ViewData["Title"] = "View Products";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -57,21 +57,20 @@
 </style>
 
 <div class="container mt-4">
-    <center><h1>Packages Offered</h1></center>
+    <center><h1>Products For Sale</h1></center>
     <br /><br />
     <div class="row">
         @foreach (var package in Model)
         {
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="~/uploads/@package.PackagePicturePath" class="card-img-top" alt="Package Image">
+                    <img src="~/uploads/@package.ProductPicturePath" class="card-img-top" alt="Product Image">
                     <div class="card-text">
-                        @package.PackageName
+                        @package.ProductName
                     </div>
                     <div class="card-body">
                         <div class="btn-group" role="group">
-                            <a href="@Url.Action("EditPackage", new { id = package.PackageID })" class="btn btn-warning"><b>Edit</b></a>
-                            <a href="@Url.Action("ViewPackageEnrollment", new { id = package.PackageID })" class="btn btn-primary"><b>Members</b></a>
+                            <a href="@Url.Action("EditProduct", new { id = package.ProductID })" class="btn btn-warning"><b>Edit</b></a>
                         </div>
                     </div>
                 </div>
