@@ -69,7 +69,7 @@ namespace Fitness_First.Controllers
 
                     _dbContext.GymPackages.Add(gymPackages);
                     await _dbContext.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ViewPackages");
                 }
                 catch (Exception ex)
                 {
@@ -84,10 +84,10 @@ namespace Fitness_First.Controllers
         }
 
 
-        public IActionResult EditPackages()
+        public IActionResult ViewPackages()
         {
             var packages = _dbContext.GymPackages.ToList(); // Retrieve the data from the database
-            return View("EditPackages", packages); // Pass the data to the "EditPackages" view
+            return View("ViewPackages", packages); // Pass the data to the "EditPackages" view
         }
 
 
