@@ -90,6 +90,71 @@ namespace Fitness_First.Controllers
             return View("ViewPackages", packages); // Pass the data to the "EditPackages" view
         }
 
+        // Add a new action to handle editing a package
+        [HttpGet]
+        public IActionResult EditPackage(int id)
+        {
+            var package = _dbContext.GymPackages.FirstOrDefault(p => p.PackageID == id);
+
+            if (package == null)
+            {
+                return NotFound();
+            }
+
+            return View("EditPackage", package);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPackagePostRequest(GymPackages updatedPackage, IFormFile packagePicture)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var existingPackage = await _dbContext.GymPackages.FindAsync(updatedPackage.PackageID);
+
+                    if (existingPackage == null)
+                    {
+                        return NotFound();
+                    }
+
+                    existingPackage.PackageName = updatedPackage.PackageName;
+                    existingPackage.PackagePrice = updatedPackage.PackagePrice;
+                    existingPackage.InstructorName = updatedPackage.InstructorName;
+                    existingPackage.Session1 = updatedPackage.Session1;
+                    existingPackage.Session2 = updatedPackage.Session2;
+                    existingPackage.Session3 = updatedPackage.Session3;
+                    existingPackage.Session4 = updatedPackage.Session4;
+                    existingPackage.Session5 = updatedPackage.Session5;
+                    existingPackage.Session6 = updatedPackage.Session6;
+                    existingPackage.Session7 = updatedPackage.Session7;
+                    existingPackage.Session8 = updatedPackage.Session8;
+
+                    //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+
+                    existingPackage.PackagePicturePath = "coach2.jpg"; // Set to the S3 bucket value
+
+                    _dbContext.GymPackages.Update(existingPackage);
+                    await _dbContext.SaveChangesAsync();
+                    return RedirectToAction("ViewPackages");
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception for debugging purposes
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    ModelState.AddModelError("", "An error occurred while processing the form.");
+                    return View("EditPackage", updatedPackage);
+                }
+            }
+
+            return View("EditPackage", updatedPackage);
+        }
+
+
+
+
+
 
         public IActionResult Privacy()
         {
