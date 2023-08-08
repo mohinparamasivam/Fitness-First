@@ -288,6 +288,18 @@ namespace Fitness_First.Controllers
         }
 
 
+        public IActionResult AddGymEquipments()
+        {
+            return View();
+        }
+
+
+
+
+
+
+
+
 
         public IActionResult Privacy()
         {
