@@ -1,0 +1,71 @@
+﻿@model Fitness_First.Models.Products
+
+@{
+    ViewData["Title"] = "Edit Product Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .btn-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 30px 0;
+    }
+    
+    .btn-container button {
+            flex: 1;
+    }
+
+    .btn {
+        width: 130px;
+        height: 40px;
+        font-size: 1em;
+        margin-right: 30px; /* Adjust the spacing between buttons */
+        margin-left: 30px; /* Adjust the spacing between buttons */
+    }
+</style>
+
+
+<div class="container mt-4">
+    <form method="post" asp-action="EditProductPostRequest" asp-asp-controller="AdminController">
+        @Html.HiddenFor(model => model.ProductID)
+        <div class="form-group">
+            <label asp-for="ProductName"></label>
+            <input class="form-control" asp-for="ProductName" />
+            <span asp-asp-validation-for="ProductName"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProductPrice"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                </div>
+                <input type="number" step="0.01" class="form-control" asp-for="ProductPrice" />
+            </div>
+            <span asp-validation-for="ProductPrice"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProductType"></label>
+            <select class="form-control" asp-for="ProductType">
+                <option value="Snacks">Snacks</option>
+                <option value="Drinks">Drinks</option>
+                <option value="Supplements">Supplements</option>
+            </select>
+            <span asp-validation-for="ProductType"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProductPicturePath"></label>
+            <input type="file" class="form-control-file" asp-for="ProductPicturePath" />
+            <span asp-validation-for="ProductPicturePath"></span>
+        </div>
+
+
+        <center>
+            <button type="submit" class="btn btn-success"><b>Save Changes</b></button>
+            <button type="submit" name="deleteButton" value="delete" class="btn btn-danger"><b>Delete</b></button>
+        </center>
+    </form>
+</div>

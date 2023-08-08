@@ -220,6 +220,74 @@ namespace Fitness_First.Controllers
         }
 
 
+        // Add a new action to handle editing a package
+        [HttpGet]
+        public IActionResult EditProduct(int id)
+        {
+            var product = _dbContext.Products.FirstOrDefault(p => p.ProductID == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View("EditProduct", product);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProductPostRequest(Products updatedProduct, string deleteButton)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var existingProduct = await _dbContext.Products.FindAsync(updatedProduct.ProductID);
+
+                    if (existingProduct == null)
+                    {
+                        return NotFound();
+                    }
+
+
+
+                    if (!string.IsNullOrEmpty(deleteButton) && deleteButton == "delete")
+                    {
+                        _dbContext.Products.Remove(existingProduct);
+                        await _dbContext.SaveChangesAsync();
+                        return RedirectToAction("ViewProducts");
+                    }
+
+                    else
+                    {
+
+                        existingProduct.ProductName = updatedProduct.ProductName;
+                        existingProduct.ProductPrice = updatedProduct.ProductPrice;
+                        existingProduct.ProductType = updatedProduct.ProductType;
+
+                        //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+
+                        existingProduct.ProductPicturePath = "redbull.jpeg"; // Set to the S3 bucket value
+
+                        _dbContext.Products.Update(existingProduct);
+                        await _dbContext.SaveChangesAsync();
+                        return RedirectToAction("ViewProducts");
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    // Log the exception for debugging purposes
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    ModelState.AddModelError("", "An error occurred while processing the form.");
+                    return View("EditProduct", updatedProduct);
+                }
+            }
+
+            return View("EditProduct", updatedProduct);
+        }
+
+
 
         public IActionResult Privacy()
         {

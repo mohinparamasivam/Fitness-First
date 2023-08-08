@@ -65,10 +65,9 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <img src="~/uploads/@package.PackagePicturePath" class="card-img-top" alt="Package Image">
-                    <div class="card-text">
-                        @package.PackageName
-                    </div>
                     <div class="card-body">
+                        <center> <h5 class="card-title">@package.PackageName</h5></center>
+                        <br>
                         <div class="btn-group" role="group">
                             <a href="@Url.Action("EditPackage", new { id = package.PackageID })" class="btn btn-warning"><b>Edit</b></a>
                             <a href="@Url.Action("ViewPackageEnrollment", new { id = package.PackageID })" class="btn btn-primary"><b>Members</b></a>

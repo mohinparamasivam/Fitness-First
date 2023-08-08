@@ -60,21 +60,22 @@
     <center><h1>Products For Sale</h1></center>
     <br /><br />
     <div class="row">
-        @foreach (var package in Model)
+        @foreach (var product in Model)
         {
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="~/uploads/@package.ProductPicturePath" class="card-img-top" alt="Product Image">
-                    <div class="card-text">
-                        @package.ProductName
-                    </div>
+                    <img src="~/uploads/@product.ProductPicturePath" class="card-img-top" alt="Product Image">
                     <div class="card-body">
-                        <div class="btn-group" role="group">
-                            <a href="@Url.Action("EditProduct", new { id = package.ProductID })" class="btn btn-warning"><b>Edit</b></a>
-                        </div>
+                       <center> <h5 class="card-title">@product.ProductName</h5></center>
+                   <br>
+                    <div class="btn-group" role="group">
+                        <a href="@Url.Action("EditProduct", new { id = product.ProductID })" class="btn btn-warning"><b>Edit</b></a>
                     </div>
+                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+
+
