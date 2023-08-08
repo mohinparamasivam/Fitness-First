@@ -106,7 +106,7 @@ namespace Fitness_First.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPackagePostRequest(GymPackages updatedPackage, IFormFile packagePicture)
+        public async Task<IActionResult> EditPackagePostRequest(GymPackages updatedPackage,string deleteButton)
         {
             if (ModelState.IsValid)
             {
@@ -119,26 +119,40 @@ namespace Fitness_First.Controllers
                         return NotFound();
                     }
 
-                    existingPackage.PackageName = updatedPackage.PackageName;
-                    existingPackage.PackagePrice = updatedPackage.PackagePrice;
-                    existingPackage.InstructorName = updatedPackage.InstructorName;
-                    existingPackage.Session1 = updatedPackage.Session1;
-                    existingPackage.Session2 = updatedPackage.Session2;
-                    existingPackage.Session3 = updatedPackage.Session3;
-                    existingPackage.Session4 = updatedPackage.Session4;
-                    existingPackage.Session5 = updatedPackage.Session5;
-                    existingPackage.Session6 = updatedPackage.Session6;
-                    existingPackage.Session7 = updatedPackage.Session7;
-                    existingPackage.Session8 = updatedPackage.Session8;
 
-                    //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
 
-                    existingPackage.PackagePicturePath = "coach2.jpg"; // Set to the S3 bucket value
+                    if (!string.IsNullOrEmpty(deleteButton) && deleteButton == "delete")
+                    {
+                        _dbContext.GymPackages.Remove(existingPackage);
+                        await _dbContext.SaveChangesAsync();
+                        return RedirectToAction("ViewPackages");
+                    }
 
-                    _dbContext.GymPackages.Update(existingPackage);
-                    await _dbContext.SaveChangesAsync();
-                    return RedirectToAction("ViewPackages");
+                    else
+                    {
+
+                        existingPackage.PackageName = updatedPackage.PackageName;
+                        existingPackage.PackagePrice = updatedPackage.PackagePrice;
+                        existingPackage.InstructorName = updatedPackage.InstructorName;
+                        existingPackage.Session1 = updatedPackage.Session1;
+                        existingPackage.Session2 = updatedPackage.Session2;
+                        existingPackage.Session3 = updatedPackage.Session3;
+                        existingPackage.Session4 = updatedPackage.Session4;
+                        existingPackage.Session5 = updatedPackage.Session5;
+                        existingPackage.Session6 = updatedPackage.Session6;
+                        existingPackage.Session7 = updatedPackage.Session7;
+                        existingPackage.Session8 = updatedPackage.Session8;
+
+                        //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+
+                        existingPackage.PackagePicturePath = "coach2.jpg"; // Set to the S3 bucket value
+
+                        _dbContext.GymPackages.Update(existingPackage);
+                        await _dbContext.SaveChangesAsync();
+                        return RedirectToAction("ViewPackages");
+                    }
                 }
+
                 catch (Exception ex)
                 {
                     // Log the exception for debugging purposes
