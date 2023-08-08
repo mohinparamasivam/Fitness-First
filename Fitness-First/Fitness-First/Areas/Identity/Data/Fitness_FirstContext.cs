@@ -22,6 +22,8 @@ namespace Fitness_First.Data
 
         public DbSet<Fitness_First.Models.GymEquipments> GymEquipments { get; set; }
 
+        public DbSet<Fitness_First.Models.PackageEnrollment> PackageEnrollments { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
