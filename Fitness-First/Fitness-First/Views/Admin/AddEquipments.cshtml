@@ -1,0 +1,50 @@
+﻿@model Fitness_First.Models.GymEquipments
+
+@{
+    ViewData["Title"] = "Add New Equipments";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<center><h1>Add New Equipment</h1></center>
+
+<div class="container mt-4">
+    <form method="post" asp-action="AddEquipmentsPostRequest" asp-asp-controller="AdminController">
+        <div class="form-group">
+            <label asp-for="EquipmentName"></label>
+            <input class="form-control" asp-for="EquipmentName" />
+            <span asp-asp-validation-for="EquipmentName"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Quantity"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                </div>
+                <input type="number" step="1" class="form-control" asp-for="Quantity" />
+            </div>
+            <span asp-validation-for="Quantity"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Availability"></label>
+            <select class="form-control" asp-for="Availability">
+                <option value="Available">Available</option>
+                <option value="Out of Order">Out of Order</option>
+                <option value="Coming Soon">Coming Soon</option>
+            </select>
+            <span asp-validation-for="Availability"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EquipmentPicturePath"></label>
+            <input type="file" class="form-control-file" asp-for="EquipmentPicturePath" />
+            <span asp-validation-for="EquipmentPicturePath"></span>
+        </div>
+
+        
+        <center>
+            <button type="submit" class="btn btn-primary">Add Equipment</button>
+        </center>
+    </form>
+</div>

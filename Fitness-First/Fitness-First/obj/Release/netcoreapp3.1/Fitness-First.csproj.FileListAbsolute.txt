@@ -462,3 +462,6 @@ C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\AddProducts.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\ViewProducts.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\EditProduct.cshtml.g.cs
+C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\AddEquipments.cshtml.g.cs
+C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\EditEquipment.cshtml.g.cs
+C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\Admin\ViewEquipments.cshtml.g.cs

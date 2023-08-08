@@ -216,7 +216,7 @@ namespace Fitness_First.Controllers
         public IActionResult ViewProducts()
         {
             var products = _dbContext.Products.ToList(); // Retrieve the data from the database
-            return View("ViewProducts", products); // Pass the data to the "EditPackages" view
+            return View("ViewProducts", products); // Pass the data to the "EditProducts" view
         }
 
 
@@ -288,9 +288,124 @@ namespace Fitness_First.Controllers
         }
 
 
-        public IActionResult AddGymEquipments()
+        public IActionResult AddEquipments()
         {
             return View();
+        }
+
+        //function to add Equipments Data to database
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddEquipmentsPostRequest(GymEquipments equipments, IFormFile equipmentPicture)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {       //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+                    if (equipmentPicture != null && equipmentPicture.Length > 0)
+                    {
+                        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + equipmentPicture.FileName;
+                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await equipmentPicture.CopyToAsync(fileStream);
+                        }
+
+                        // Set the PackagePicturePath property before adding to the database
+                        equipments.EquipmentPicturePath = "~/uploads/" + uniqueFileName;
+                    }
+
+                    _dbContext.GymEquipments.Add(equipments);
+                    await _dbContext.SaveChangesAsync();
+                    return RedirectToAction("ViewEquipments");
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception for debugging purposes
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    ModelState.AddModelError("", "An error occurred while processing the form.");
+                    return View("AddEquipments", equipments);
+                }
+            }
+
+            return View("AddEquipments", equipments);
+        }
+
+
+        public IActionResult ViewEquipments()
+        {
+            var equipments = _dbContext.GymEquipments.ToList(); // Retrieve the data from the database
+            return View("ViewEquipments", equipments); // Pass the data to the "EditEquipments" view
+        }
+
+
+        // Add a new action to handle editing a package
+        [HttpGet]
+        public IActionResult EditEquipment(int id)
+        {
+            var equipments = _dbContext.GymEquipments.FirstOrDefault(p => p.EquipmentID == id);
+
+            if (equipments == null)
+            {
+                return NotFound();
+            }
+
+            return View("EditEquipment", equipments);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEquipmentPostRequest(GymEquipments updatedEquipment, string deleteButton)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var existingEquipment = await _dbContext.GymEquipments.FindAsync(updatedEquipment.EquipmentID);
+
+                    if (existingEquipment == null)
+                    {
+                        return NotFound();
+                    }
+
+
+
+                    if (!string.IsNullOrEmpty(deleteButton) && deleteButton == "delete")
+                    {
+                        _dbContext.GymEquipments.Remove(existingEquipment);
+                        await _dbContext.SaveChangesAsync();
+                        return RedirectToAction("ViewEquipments");
+                    }
+
+                    else
+                    {
+
+                        existingEquipment.EquipmentName = updatedEquipment.EquipmentName;
+                        existingEquipment.Quantity = updatedEquipment.Quantity;
+                        existingEquipment.Availability = updatedEquipment.Availability;
+
+                        //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+
+                        existingEquipment.EquipmentPicturePath = "Dumbbell.png"; // Set to the S3 bucket value
+
+                        _dbContext.GymEquipments.Update(existingEquipment);
+                        await _dbContext.SaveChangesAsync();
+                        return RedirectToAction("ViewEquipments");
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    // Log the exception for debugging purposes
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    ModelState.AddModelError("", "An error occurred while processing the form.");
+                    return View("EditEquipment", updatedEquipment);
+                }
+            }
+
+            return View("EditEquipment", updatedEquipment);
         }
 
 
