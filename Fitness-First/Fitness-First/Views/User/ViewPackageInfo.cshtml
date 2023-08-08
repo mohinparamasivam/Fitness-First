@@ -1,0 +1,116 @@
+﻿@model Fitness_First.Models.GymPackages
+
+@{
+    ViewData["Title"] = "View Package Information";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #f4f4f4;
+    }
+
+    .package-info-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 30px;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .package-image {
+        max-width: 40%;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .package-image img {
+        width: 100%;
+        height: auto;
+    }
+
+    .package-details {
+        max-width: 60%;
+        padding: 20px;
+    }
+
+    .package-details h3 {
+        margin-top: 0;
+        font-size: 1.5rem;
+    }
+
+    .package-details p {
+        font-size: 1.2rem;
+    }
+
+    .enroll-button {
+        margin-top: 20px;
+    }
+
+    .timeslots {
+        margin-top: 20px;
+    }
+
+</style>
+
+<div class="container">
+    <center><h1>@Model.PackageName Package Details</h1></center>
+    <div class="package-info-container">
+        <div class="package-image">
+            <img src="~/uploads/@Model.PackagePicturePath" alt="Package Image" class="img-fluid" />
+        </div>
+        <div class="package-details">
+            <center><p style="font-size: 16px;"><b>Instructor Name:</b> @Model.InstructorName</p></center>
+                <center><p style="font-size: 16px;"><b>Price:</b> RM @Model.PackagePrice</p></center>
+                    <center> <p style="font-size: 16px;"><b>Location:</b> Asia Pacific University (APU)
+                        , Jalan Teknologi 5, Technology Park Malaysia, Bukit Jalil, Kuala Lumpur 57000, Malaysia.</p></center>
+
+            <hr />
+            <div class="timeslots">
+                <center><h4>Time Slots:</h4></center>
+                <br />
+                <center>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <center><u><b>Week 1</b></u></center>
+
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <center>
+                            <li>Slot 1: @Model.Session1.ToString("dddd, dd MMMM yyyy HH:mm")</li>
+                </center>
+                <li><center>Slot 2: @Model.Session2.ToString("dddd, dd MMMM yyyy HH:mm")</center></li>
+                <br />
+                </ul>
+
+                <center><u><b>Week 2</b></u></center>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li>Slot 1: @Model.Session3.ToString("dddd, dd MMMM yyyy HH:mm")</li>
+                    <li>Slot 2: @Model.Session4.ToString("dddd, dd MMMM yyyy HH:mm")</li>
+                    <br />
+                </ul>
+
+                <center><u><b>Week 3</b></u></center>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li>Slot 1: @Model.Session5.ToString("dddd, dd MMMM yyyy HH:mm")</li>
+                    <li>Slot 2: @Model.Session6.ToString("dddd, dd MMMM yyyy HH:mm")</li>
+                    <br />
+                </ul>
+
+                <center><u><b>Week 4</b></u></center>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li>Slot 1: @Model.Session7.ToString("dddd, dd MMMM yyyy HH:mm")</li>
+                    <li>Slot 2: @Model.Session8.ToString("dddd, dd MMMM yyyy HH:mm")</li>
+                </ul>
+                </ul>
+                </center>
+            </div>
+
+            <form method="post" asp-action="EnrollPackage" asp-controller="Member">
+                <input type="hidden" name="packageId" value="@Model.PackageID" />
+                <center><button type="submit" class="btn btn-success enroll-button">Enroll Now</button></center>
+            </form>
+        </div>
+    </div>
+</div>
