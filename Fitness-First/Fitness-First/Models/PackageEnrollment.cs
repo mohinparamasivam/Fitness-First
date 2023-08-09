@@ -8,11 +8,13 @@ namespace Fitness_First.Models
         [Key]
         public int EnrollmentID { get; set; }
 
-        public int MemberName { get; set; }
+        public string MemberName { get; set; }
 
-        public int MemberEmail { get; set; }
+        public string MemberEmail { get; set; }
 
         public string PackageName { get; set; }
+
+        public string PackagePicturePath { get; set; }
 
         public double PackagePrice { get; set; }
 

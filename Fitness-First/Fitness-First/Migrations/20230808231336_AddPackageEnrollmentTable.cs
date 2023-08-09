@@ -19,6 +19,7 @@ namespace Fitness_First.Migrations
                    PackagePrice = table.Column<double>(nullable: false),
                    InstructorName = table.Column<string>(nullable: false),
                    EnrolledAt = table.Column<DateTime>(nullable: false),
+                   PackagePicturePath = table.Column<string>(nullable: true),
                    Session1 = table.Column<DateTime>(nullable: false),
                    Session2 = table.Column<DateTime>(nullable: false),
                    Session3 = table.Column<DateTime>(nullable: false),

@@ -1,8 +1,8 @@
-﻿@model IEnumerable<Fitness_First.Models.GymPackages>
+﻿@model IEnumerable<Fitness_First.Models.PackageEnrollment>
 
 @{
     ViewData["Title"] = "View Packages";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
 <style>
@@ -57,7 +57,7 @@
 </style>
 
 <div class="container mt-4">
-    <center><h1>Packages Offered</h1></center>
+    <center><h1>Packages Currently Enrolled</h1></center>
     <br /><br />
     <div class="row">
         @foreach (var package in Model)
@@ -69,7 +69,7 @@
                         <center> <h5 class="card-title">@package.PackageName</h5></center>
                         <br>
                         <div class="btn-group" role="group">
-                            <a href="@Url.Action("ViewPackageInfo", new { id = package.PackageID })" class="btn btn-primary"><b>View</b></a>
+                            <a href="@Url.Action("ViewEnrollmentInfo", new { id = package.EnrollmentID })" class="btn btn-primary"><b>View</b></a> 
                         </div>
                     </div>
                 </div>

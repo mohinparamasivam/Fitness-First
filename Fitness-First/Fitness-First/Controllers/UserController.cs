@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Fitness_First.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
+
+
 
 namespace Fitness_First.Controllers
 {
@@ -17,40 +21,97 @@ namespace Fitness_First.Controllers
 
         //create variable for connection to db
         private readonly Fitness_FirstContext _dbContext;
+        private readonly UserManager<Fitness_FirstUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<UserController> _logger;
 
         //create constructor for database connection
-        public UserController(Fitness_FirstContext dbContext, IWebHostEnvironment webHostEnvironment, ILogger<UserController> logger)
+        public UserController(Fitness_FirstContext dbContext, UserManager<Fitness_FirstUser> userManager,IWebHostEnvironment webHostEnvironment, ILogger<UserController> logger)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
 
-        public IActionResult ViewPackages()
-        {
-            var packages = _dbContext.GymPackages.ToList(); // Retrieve the data from the database
-            return View("ViewPackages", packages); // Pass the data to the "ViewPackageInfo" view
-        }
+        public IActionResult Index()
+            {
+                return View();
+            }
+
+            public IActionResult ViewPackages()
+            {
+                var packages = _dbContext.GymPackages.ToList(); // Retrieve the data from the database
+                return View("ViewPackages", packages); // Pass the data to the "ViewPackageInfo" view
+            }
+
+
 
         // Add a new action to handle viewing a package
         [HttpGet]
         public IActionResult ViewPackageInfo(int id)
         {
-            var package = _dbContext.GymPackages.FirstOrDefault(p => p.PackageID == id);
-
-            if (package == null)
+            try
             {
-                return NotFound();
-            }
+                var package = _dbContext.GymPackages.FirstOrDefault(p => p.PackageID == id);
 
-            return View("ViewPackageInfo", package);
+                if (package == null)
+                {
+                    return NotFound();
+                }
+
+                return View("ViewPackageInfo", package);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while retrieving package information.");
+                return RedirectToAction("Error"); // Handle the error appropriately in your "Error" action
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EnrollPackage(int packageId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            var package = _dbContext.GymPackages.FirstOrDefault(p => p.PackageID == packageId);
+
+           
+
+            var enrollment = new PackageEnrollment // Use "new" to create a new instance of PackageEnrollment
+            {
+                MemberName = user.MemberName,
+                MemberEmail = user.Email,
+                PackageName = package.PackageName,
+                PackagePrice = package.PackagePrice,
+                InstructorName = package.InstructorName,
+                PackagePicturePath = package.PackagePicturePath,
+                Session1 = package.Session1,
+                Session2 = package.Session2,
+                Session3 = package.Session3,
+                Session4 = package.Session4,
+                Session5 = package.Session5,
+                Session6 = package.Session6,
+                Session7 = package.Session7,
+                Session8 = package.Session8,
+                EnrolledAt = DateTime.Now
+            };
+
+            _dbContext.PackageEnrollments.Add(enrollment); // Use PackageEnrollments to access the table
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToAction("ViewPackagesEnrolled"); // Change to your desired action and controller
+        }
+
+       
+
+        public IActionResult ViewPackagesEnrolled()
+        {
+            var packages = _dbContext.PackageEnrollments.ToList(); // Retrieve the data from the database
+            return View("ViewPackagesEnrolled", packages); // Pass the data to the "ViewPackageInfo" view
         }
 
         public IActionResult Privacy()
@@ -59,6 +120,7 @@ namespace Fitness_First.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+       
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
