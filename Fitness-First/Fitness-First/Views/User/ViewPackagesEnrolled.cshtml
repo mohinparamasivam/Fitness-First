@@ -62,18 +62,21 @@
     <div class="row">
         @foreach (var package in Model)
         {
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="~/uploads/@package.PackagePicturePath" class="card-img-top" alt="Package Image">
-                    <div class="card-body">
-                        <center> <h5 class="card-title">@package.PackageName</h5></center>
-                        <br>
-                        <div class="btn-group" role="group">
-                            <a href="@Url.Action("ViewEnrollmentInfo", new { id = package.EnrollmentID })" class="btn btn-primary"><b>View</b></a> 
+            if (package.MemberEmail == User.Identity.Name) // Filter by current user's email
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="~/uploads/@package.PackagePicturePath" class="card-img-top" alt="Package Image">
+                        <div class="card-body">
+                            <center> <h5 class="card-title">@package.PackageName</h5></center>
+                            <br>
+                            <div class="btn-group" role="group">
+                                <a href="@Url.Action("ViewEnrollmentInfo", new { id = package.EnrollmentID })" class="btn btn-primary"><b>View</b></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 </div>

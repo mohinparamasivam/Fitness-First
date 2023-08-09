@@ -109,8 +109,20 @@
 
             <form method="post" asp-action="EnrollPackage">
                 <input type="hidden" name="packageId" value="@Model.PackageID" />
-                <center><button type="submit" class="btn btn-success enroll-button">Enroll Now</button></center>
+                <center>
+                    <button type="submit" class="btn btn-success enroll-button"
+                    @(PackageAlreadyEnrolled(Model.PackageName, User.Identity.Name) ? "disabled" : "")>
+                        @(PackageAlreadyEnrolled(Model.PackageName, User.Identity.Name) ? "Already Enrolled" : "Enroll Now")
+                    </button>
+                </center>
             </form>
         </div>
     </div>
-</div>
+
+    @functions {
+        private bool PackageAlreadyEnrolled(string packageName, string userEmail)
+        {
+            var existingEnrollments = ViewData["ExistingEnrollments"] as IEnumerable<Fitness_First.Models.PackageEnrollment>;
+            return existingEnrollments != null && existingEnrollments.Any(e => e.PackageName == packageName && e.MemberEmail == userEmail);
+        }
+    }

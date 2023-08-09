@@ -61,6 +61,12 @@ namespace Fitness_First.Controllers
                     return NotFound();
                 }
 
+                var existingEnrollments = _dbContext.PackageEnrollments
+         .Where(e => e.MemberEmail == User.Identity.Name)
+         .ToList();
+
+                ViewData["ExistingEnrollments"] = existingEnrollments;
+
                 return View("ViewPackageInfo", package);
             }
             catch (Exception ex)
