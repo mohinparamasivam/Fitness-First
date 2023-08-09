@@ -150,8 +150,8 @@ namespace Fitness_First.Controllers
 
         public IActionResult ViewProducts()
         {
-            var packages = _dbContext.Products.ToList(); // Retrieve the data from the database
-            return View("ViewProducts", packages); // Pass the data to the "ViewPackageInfo" view
+            var products = _dbContext.Products.ToList(); // Retrieve the data from the database
+            return View("ViewProducts", products); // Pass the data to the "ViewPackageInfo" view
         }
 
 
@@ -201,6 +201,25 @@ namespace Fitness_First.Controllers
         public IActionResult PurchaseSummary()
         {
             return View();
+        }
+
+
+        public IActionResult ViewEquipments()
+        {
+            var equipments = _dbContext.GymEquipments.ToList(); // Retrieve the data from the database
+            return View("ViewEquipments", equipments); // Pass the data to the "EditEquipments" view
+        }
+
+        public IActionResult ViewEquipmentInfo(int id)
+        {
+            var equipment = _dbContext.GymEquipments.Find(id);
+
+            if (equipment == null)
+            {
+                return NotFound();
+            }
+
+            return View("ViewEquipmentInfo", equipment);
         }
 
         public IActionResult Privacy()

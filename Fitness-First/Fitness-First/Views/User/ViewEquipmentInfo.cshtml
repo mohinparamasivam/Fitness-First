@@ -1,0 +1,81 @@
+﻿@model Fitness_First.Models.GymEquipments
+
+@{
+    ViewData["Title"] = "View Equipment Information";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #f4f4f4;
+    }
+
+    .package-info-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 30px;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .package-image {
+        max-width: 40%;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .package-image img {
+            width: 100%;
+            height: auto;
+        }
+
+    .package-details {
+        max-width: 60%;
+        padding: 20px;
+    }
+
+        .package-details h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .package-details p {
+            font-size: 1.2rem;
+        }
+
+    .enroll-button {
+        margin-top: 20px;
+    }
+
+    .timeslots {
+        margin-top: 20px;
+    }
+
+</style>
+
+<div class="container">
+    <center><h1>@Model.EquipmentName</h1></center>
+    <div class="package-info-container">
+        <div class="package-image">
+            <img src="~/uploads/@Model.EquipmentPicturePath" alt="Package Image" class="img-fluid" />
+        </div>
+        <div class="package-details">
+            <center><p style="font-size: 16px;"><b>Equipment:</b> @Model.EquipmentName</p></center>
+            <center><p style="font-size: 16px;"><b>Quantity:</b> @Model.Quantity</p></center>
+            <center><p style="font-size: 16px;"><b>Availability:</b> @Model.Availability</p></center>
+            <center>
+                <p style="font-size: 16px;">
+                    <b>Location:</b> Asia Pacific University (APU)
+                    , Jalan Teknologi 5, Technology Park Malaysia, Bukit Jalil, Kuala Lumpur 57000, Malaysia.
+                </p>
+            </center>
+
+           <br />
+        </div>
+    </div>
+
+    
+</div>
