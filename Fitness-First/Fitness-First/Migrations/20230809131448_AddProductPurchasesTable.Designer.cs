@@ -4,14 +4,16 @@ using Fitness_First.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fitness_First.Migrations
 {
     [DbContext(typeof(Fitness_FirstContext))]
-    partial class Fitness_FirstContextModelSnapshot : ModelSnapshot
+    [Migration("20230809131448_AddProductPurchasesTable")]
+    partial class AddProductPurchasesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

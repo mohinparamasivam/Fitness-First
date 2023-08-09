@@ -148,7 +148,60 @@ namespace Fitness_First.Controllers
             return RedirectToAction("ViewPackagesEnrolled"); // Redirect back to the list of enrolled packages
         }
 
+        public IActionResult ViewProducts()
+        {
+            var packages = _dbContext.Products.ToList(); // Retrieve the data from the database
+            return View("ViewProducts", packages); // Pass the data to the "ViewPackageInfo" view
+        }
 
+
+        public IActionResult ViewProductInfo(int id)
+        {
+            var product = _dbContext.Products.Find(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View("ViewProductInfo",product);
+        }
+
+        [HttpPost]
+        public IActionResult PurchaseProduct(int productId)
+        {
+            // Retrieve the product from the database
+            var product = _dbContext.Products.Find(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+
+            // Get the current user's email
+            string userEmail = User.Identity.Name;
+
+            // Create a new ProductPurchase instance
+            var purchase = new ProductPurchase
+            {
+                ProductName = product.ProductName,
+                ProductType = product.ProductType,
+                ProductPrice = product.ProductPrice,
+                PurchasedBy = userEmail
+            };
+
+            // Add the purchase to the database
+            _dbContext.ProductPurchases.Add(purchase);
+            _dbContext.SaveChanges();
+
+            return RedirectToAction("PurchaseSummary", "User"); // Redirect to a relevant page
+        }
+
+        public IActionResult PurchaseSummary()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

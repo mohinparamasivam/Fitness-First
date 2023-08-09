@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Fitness_First.Models.Products>
+
+@{
+    ViewData["Title"] = "Products For Sale";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<style>
+    .card {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+    }
+
+        .card:hover {
+            filter: grayscale(100%);
+        }
+
+    .card-img-top {
+        transition: transform 0.3s;
+    }
+
+    .card:hover .card-img-top {
+        transform: scale(1.1);
+    }
+
+    .card-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff; /* Attractive text color */
+        font-size: 1.5em;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .card:hover .card-text {
+        opacity: 1;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        bottom: 0px;
+    }
+
+    .btn {
+        width: 120px;
+        height: 40px;
+        font-size: 1em;
+    }
+
+</style>
+
+<div class="container mt-4">
+    <center><h1>Products For Sale</h1></center>
+    <br /><br />
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="~/uploads/@product.ProductPicturePath" class="card-img-top" alt="Product Image">
+                    <div class="card-body">
+                        <center> <h5 class="card-title">@product.ProductName</h5></center>
+                        <br>
+                        <div class="btn-group" role="group">
+                            <a href="@Url.Action("ViewProductInfo", new { id = product.ProductID })" class="btn btn-primary"><b>View</b></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
