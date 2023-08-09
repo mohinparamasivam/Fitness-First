@@ -27,24 +27,24 @@
         overflow: hidden;
     }
 
-    .package-image img {
-        width: 100%;
-        height: auto;
-    }
+        .package-image img {
+            width: 100%;
+            height: auto;
+        }
 
     .package-details {
         max-width: 60%;
         padding: 20px;
     }
 
-    .package-details h3 {
-        margin-top: 0;
-        font-size: 1.5rem;
-    }
+        .package-details h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
 
-    .package-details p {
-        font-size: 1.2rem;
-    }
+        .package-details p {
+            font-size: 1.2rem;
+        }
 
     .enroll-button {
         margin-top: 20px;
@@ -64,9 +64,13 @@
         </div>
         <div class="package-details">
             <center><p style="font-size: 16px;"><b>Instructor Name:</b> @Model.InstructorName</p></center>
-                <center><p style="font-size: 16px;"><b>Price:</b> RM @Model.PackagePrice</p></center>
-                    <center> <p style="font-size: 16px;"><b>Location:</b> Asia Pacific University (APU)
-                        , Jalan Teknologi 5, Technology Park Malaysia, Bukit Jalil, Kuala Lumpur 57000, Malaysia.</p></center>
+            <center><p style="font-size: 16px;"><b>Price:</b> RM @Model.PackagePrice</p></center>
+            <center>
+                <p style="font-size: 16px;">
+                    <b>Location:</b> Asia Pacific University (APU)
+                    , Jalan Teknologi 5, Technology Park Malaysia, Bukit Jalil, Kuala Lumpur 57000, Malaysia.
+                </p>
+            </center>
 
             <hr />
             <div class="timeslots">
@@ -110,7 +114,7 @@
             <form method="post" asp-action="EnrollPackage">
                 <input type="hidden" name="packageId" value="@Model.PackageID" />
                 <center>
-                    <button type="submit" class="btn btn-success enroll-button"
+                    <button type="submit" class="btn @(PackageAlreadyEnrolled(Model.PackageName, User.Identity.Name) ? "btn-success" : "btn-primary") enroll-button"
                     @(PackageAlreadyEnrolled(Model.PackageName, User.Identity.Name) ? "disabled" : "")>
                         @(PackageAlreadyEnrolled(Model.PackageName, User.Identity.Name) ? "Already Enrolled" : "Enroll Now")
                     </button>
@@ -126,3 +130,4 @@
             return existingEnrollments != null && existingEnrollments.Any(e => e.PackageName == packageName && e.MemberEmail == userEmail);
         }
     }
+</div>
