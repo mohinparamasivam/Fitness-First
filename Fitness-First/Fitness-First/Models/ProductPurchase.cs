@@ -14,7 +14,9 @@ namespace Fitness_First.Models
         public string ProductType { get; set; }
 
         public double ProductPrice { get; set; }
+        public int Quantity { get; set; }
 
+        public DateTime PurchaseTime { get; set; }
         public string PurchasedBy { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Fitness_First.Migrations
                     ProductName = table.Column<string>(nullable: true),
                     ProductType = table.Column<string>(nullable: true),
                     ProductPrice = table.Column<double>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
                     PurchasedBy = table.Column<string>(nullable: true),
                     PurchaseTime = table.Column<DateTime>(nullable: true)
                 },

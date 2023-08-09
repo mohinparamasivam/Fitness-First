@@ -168,7 +168,7 @@ namespace Fitness_First.Controllers
         }
 
         [HttpPost]
-        public IActionResult PurchaseProduct(int productId)
+        public IActionResult PurchaseProduct(int productId,int quantity)
         {
             // Retrieve the product from the database
             var product = _dbContext.Products.Find(productId);
@@ -188,7 +188,9 @@ namespace Fitness_First.Controllers
                 ProductName = product.ProductName,
                 ProductType = product.ProductType,
                 ProductPrice = product.ProductPrice,
-                PurchasedBy = userEmail
+                PurchasedBy = userEmail,
+                PurchaseTime = DateTime.Now,
+                Quantity = quantity
             };
 
             // Add the purchase to the database
