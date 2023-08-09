@@ -13,11 +13,12 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Product Name</th>
-                <th>Product Type</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Purchase Time</th>
+                <th class="text-center">Product Name</th>
+                <th class="text-center">Product Type</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Purchase Date</th>
+                <th class="text-center">Cancel Purchase</th> <!-- New column for Cancel button -->
             </tr>
         </thead>
         <tbody>
@@ -25,11 +26,16 @@
             @foreach (var productPurchase in Model.ProductPurchases)
             {
                 <tr>
-                    <td>@productPurchase.ProductName</td>
-                    <td>@productPurchase.ProductType</td>
-                    <td>@productPurchase.Quantity</td>
-                    <td>RM @(productPurchase.ProductPrice * productPurchase.Quantity)</td>
-                    <td>@productPurchase.PurchaseTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td class="text-center">@productPurchase.ProductName</td>
+                    <td class="text-center">@productPurchase.ProductType</td>
+                    <td class="text-center">@productPurchase.Quantity</td>
+                    <td class="text-center">RM @(productPurchase.ProductPrice * productPurchase.Quantity)</td>
+                    <td class="text-center">@productPurchase.PurchaseTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td class="text-center">
+                        <form asp-action="CancelProductPurchase" asp-route-purchaseId="@productPurchase.PurchaseID" method="post">
+                            <button type="submit" class="btn btn-danger">Cancel</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -37,7 +43,7 @@
 
     <!-- Display the sum of product prices -->
     <div class="text-right">
-        <h4>Sum of Product Prices: RM @Model.ProductSum</h4>
+        <h5><b>Product Total: RM @Model.ProductSum</b></h5>
     </div>
 
     <!-- Bottom Part: Package Purchases -->
@@ -45,9 +51,9 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Package Name</th>
-                <th>Package Price</th>
-                <th>Enrollment Date</th>
+                <th class="text-center">Package Name</th>
+                <th class="text-center">Package Price</th>
+                <th class="text-center">Enrollment Date</th>
             </tr>
         </thead>
         <tbody>
@@ -55,9 +61,9 @@
             @foreach (var packagePurchase in Model.PackagePurchases)
             {
                 <tr>
-                    <td>@packagePurchase.PackageName</td>
-                    <td>RM @packagePurchase.PackagePrice</td>
-                    <td>@packagePurchase.EnrolledAt.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td class="text-center">@packagePurchase.PackageName</td>
+                    <td class="text-center">RM @packagePurchase.PackagePrice</td>
+                    <td class="text-center">@packagePurchase.EnrolledAt.ToString("yyyy-MM-dd HH:mm")</td>
                 </tr>
             }
         </tbody>
@@ -65,11 +71,14 @@
 
     <!-- Display the sum of package prices -->
     <div class="text-right">
-        <h4>Sum of Package Prices: RM @Model.PackageSum</h4>
+        <h5><b>Package Total: RM @Model.PackageSum</b></h5>
     </div>
+    <br />
 
     <!-- Display the total sum to be paid -->
-    <div class="text-right">
-        <h2>Total Amount to be Paid: RM @Model.TotalAmount</h2>
+    <div class="text-center">
+        <hr class="my-2"> <!-- Horizontal line -->
+        <h2><b>Total Amount: RM @Model.TotalAmount</b></h2>
+        <hr class="my-2"> <!-- Horizontal line -->
     </div>
 </div>

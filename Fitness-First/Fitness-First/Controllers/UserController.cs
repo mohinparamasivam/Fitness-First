@@ -195,14 +195,21 @@ namespace Fitness_First.Controllers
             _dbContext.ProductPurchases.Add(purchase);
             _dbContext.SaveChanges();
 
-            return RedirectToAction("PurchaseSummary", "User"); // Redirect to a relevant page
+            return RedirectToAction("PurchaseSummary"); // Redirect to a relevant page
         }
 
         public IActionResult PurchaseSummary()
         {
+            // Get the ID of the current logged-in user
+            var userId = User.Identity.Name; // Replace this with the actual way to get the user ID
+
             // Retrieve product and package purchase data from the database and calculate sums
             var productPurchases = _dbContext.ProductPurchases.ToList();
-            var packagePurchases = _dbContext.PackageEnrollments.ToList();
+
+            // Filter package purchases for the current user
+            var packagePurchases = _dbContext.PackageEnrollments
+                .Where(p => p.MemberEmail == userId)
+                .ToList();
 
             var productSum = productPurchases.Sum(p => p.ProductPrice * p.Quantity);
             var packageSum = packagePurchases.Sum(p => p.PackagePrice);
@@ -225,6 +232,7 @@ namespace Fitness_First.Controllers
 
 
 
+
         public IActionResult ViewEquipments()
         {
             var equipments = _dbContext.GymEquipments.ToList(); // Retrieve the data from the database
@@ -241,6 +249,23 @@ namespace Fitness_First.Controllers
             }
 
             return View("ViewEquipmentInfo", equipment);
+        }
+
+        [HttpPost]
+        public IActionResult CancelProductPurchase(int purchaseId)
+        {
+            var productPurchase = _dbContext.ProductPurchases.Find(purchaseId);
+
+            if (productPurchase == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.ProductPurchases.Remove(productPurchase);
+            _dbContext.SaveChanges();
+
+            // Redirect back to the PurchaseSummary action
+            return RedirectToAction("PurchaseSummary");
         }
 
         public IActionResult Privacy()
