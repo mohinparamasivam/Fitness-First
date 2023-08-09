@@ -70,7 +70,7 @@
                         <br>
                         <div class="btn-group" role="group">
                             <a href="@Url.Action("EditPackage", new { id = package.PackageID })" class="btn btn-warning"><b>Edit</b></a>
-                            <a href="@Url.Action("ViewPackageEnrollment", new { id = package.PackageID })" class="btn btn-primary"><b>Members</b></a>
+                            <a href="@Url.Action("ViewPackageEnrollment", new { id = package.PackageID,packagename = package.PackageName })" class="btn btn-primary"><b>Members</b></a>
                         </div>
                     </div>
                 </div>

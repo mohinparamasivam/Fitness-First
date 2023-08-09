@@ -409,7 +409,22 @@ namespace Fitness_First.Controllers
         }
 
 
+        public async Task<IActionResult> ViewPackageEnrollment(int id,string packagename)
+        {
+            var package = await _dbContext.GymPackages.FindAsync(id);
+            if (package == null)
+            {
+                return NotFound();
+            }
 
+            var enrollments = await _dbContext.PackageEnrollments
+                .Where(e => e.PackageName == packagename)
+                .ToListAsync();
+
+            ViewBag.PackageName = package.PackageName;
+
+            return View(enrollments);
+        }
 
 
 

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Fitness_First.Models.PackageEnrollment>
+
+@{
+    ViewData["Title"] = "View Package Enrollment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <center><h1>Members Enrolled in @ViewBag.PackageName</h1></center>
+    <br /><br />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class=text-center>Member Name</th>
+                <th class =text-center>Member Email</th>
+                <th class=text-center>Enrollment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model)
+            {
+                <tr>
+                    <td class=text-center>@enrollment.MemberName</td>
+                    <td class=text-center>@enrollment.MemberEmail</td>
+                    <td class=text-center>@enrollment.EnrolledAt.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
