@@ -120,6 +120,36 @@ namespace Fitness_First.Controllers
             return View("ViewPackagesEnrolled", packages); // Pass the data to the "ViewPackageInfo" view
         }
 
+        public IActionResult ViewEnrollmentInfo(int id)
+        {
+            var enrollment = _dbContext.PackageEnrollments.FirstOrDefault(e => e.EnrollmentID == id);
+
+            if (enrollment == null)
+            {
+                return NotFound();
+            }
+
+            return View(enrollment);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveEnrollment(int id)
+        {
+            var enrollment = _dbContext.PackageEnrollments.Find(id);
+
+            if (enrollment == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.PackageEnrollments.Remove(enrollment);
+            _dbContext.SaveChanges();
+
+            return RedirectToAction("ViewPackagesEnrolled"); // Redirect back to the list of enrolled packages
+        }
+
+
+
         public IActionResult Privacy()
         {
             return View();

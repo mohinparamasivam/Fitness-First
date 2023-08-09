@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Fitness_First.Models.PackageEnrollment>
 
 @{
-    ViewData["Title"] = "View Packages";
+    ViewData["Title"] = "View Enrolled Packages";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
@@ -68,10 +68,13 @@
                     <div class="card">
                         <img src="~/uploads/@package.PackagePicturePath" class="card-img-top" alt="Package Image">
                         <div class="card-body">
-                            <center> <h5 class="card-title">@package.PackageName</h5></center>
-                            <br>
+                            <center><h5 class="card-title">@package.PackageName</h5></center>
+                            <br />
                             <div class="btn-group" role="group">
                                 <a href="@Url.Action("ViewEnrollmentInfo", new { id = package.EnrollmentID })" class="btn btn-primary"><b>View</b></a>
+                                <form id="form-@package.EnrollmentID" asp-action="RemoveEnrollment" asp-route-id="@package.EnrollmentID" method="post">
+                                    <button type="button" onclick="submitForm('@package.EnrollmentID');" class="btn btn-danger"><b>Quit</b></button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -80,3 +83,11 @@
         }
     </div>
 </div>
+
+<script>
+    function submitForm(formId) {
+        var form = document.getElementById('form-' + formId);
+        form.submit();
+    }
+</script>
+

@@ -1,0 +1,68 @@
+﻿@model Fitness_First.Models.PackageEnrollment
+
+@{
+    ViewData["Title"] = "View Enrollment Information";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<style>
+    .calendar {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .calendar-event {
+        width: calc(12.5% - 10px);
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .event-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .event-time {
+        font-size: 14px;
+    }
+</style>
+
+<div class="container">
+    <center><h1>Enrollment Information</h1></center>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card mt-4">
+                <img src="~/uploads/@Model.PackagePicturePath" class="card-img-top" alt="Package Image">
+                <div class="card-body">
+                    <center>
+                    <u><h4 class="card-title">@Model.PackageName</h4></u><p></p>
+                    <p><b>Instructor Name:</b> @Model.InstructorName</p>
+                    <p><b>Price:</b> RM @Model.PackagePrice</p>
+                    <p><b>Enrolled At:</b> @Model.EnrolledAt.ToString("dddd, dd MMMM yyyy HH:mm")</p>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3 class="text-center">TimeTable</h3>
+            <div class="calendar">
+                @for (int i = 1; i <= 8; i++)
+                {
+                    <div class="calendar-event">
+                        <p class="event-title">Session @i</p>
+                        <p class="event-time">@Model.GetType().GetProperty($"Session{i}").GetValue(Model, null)</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Add any necessary scripts here -->
+}

@@ -468,3 +468,4 @@ C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\User\ViewPackageInfo.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\User\ViewPackages.cshtml.g.cs
 C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\User\ViewPackagesEnrolled.cshtml.g.cs
+C:\Users\Mohin Paramasivam\Desktop\Fitness-First\Fitness-First\Fitness-First\obj\Release\netcoreapp3.1\Razor\Views\User\ViewEnrollmentInfo.cshtml.g.cs
