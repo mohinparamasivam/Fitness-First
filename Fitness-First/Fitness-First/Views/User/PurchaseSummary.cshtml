@@ -1,7 +1,75 @@
-﻿@{
+﻿@model Fitness_First.Models.PurchaseSummaryViewModel
+
+@{
     ViewData["Title"] = "Purchase Summary";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<Purchaseh1>Purchase Summary<h1>
-<!-- Add your admin-specific content here -->
+<div class="container mt-4">
+    <center><h1>Purchase Summary</h1></center>
+
+    <!-- Top Part: Product Purchases -->
+    <h2>Product Purchases</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Type</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Purchase Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through product purchases from the database -->
+            @foreach (var productPurchase in Model.ProductPurchases)
+            {
+                <tr>
+                    <td>@productPurchase.ProductName</td>
+                    <td>@productPurchase.ProductType</td>
+                    <td>@productPurchase.Quantity</td>
+                    <td>RM @(productPurchase.ProductPrice * productPurchase.Quantity)</td>
+                    <td>@productPurchase.PurchaseTime.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Display the sum of product prices -->
+    <div class="text-right">
+        <h4>Sum of Product Prices: RM @Model.ProductSum</h4>
+    </div>
+
+    <!-- Bottom Part: Package Purchases -->
+    <h2>Package Purchases</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Package Name</th>
+                <th>Package Price</th>
+                <th>Enrollment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through package purchases from the database -->
+            @foreach (var packagePurchase in Model.PackagePurchases)
+            {
+                <tr>
+                    <td>@packagePurchase.PackageName</td>
+                    <td>RM @packagePurchase.PackagePrice</td>
+                    <td>@packagePurchase.EnrolledAt.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Display the sum of package prices -->
+    <div class="text-right">
+        <h4>Sum of Package Prices: RM @Model.PackageSum</h4>
+    </div>
+
+    <!-- Display the total sum to be paid -->
+    <div class="text-right">
+        <h2>Total Amount to be Paid: RM @Model.TotalAmount</h2>
+    </div>
+</div>
