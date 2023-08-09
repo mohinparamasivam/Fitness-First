@@ -426,7 +426,29 @@ namespace Fitness_First.Controllers
             return View(enrollments);
         }
 
+        public IActionResult RevenueSummary()
+        {
+            // Retrieve product and package purchase data from the database and calculate sums
+            var productPurchases = _dbContext.ProductPurchases.ToList();
+            var packagePurchases = _dbContext.PackageEnrollments.ToList();
 
+            var productSum = productPurchases.Sum(p => p.ProductPrice * p.Quantity);
+            var packageSum = packagePurchases.Sum(p => p.PackagePrice);
+
+            var totalAmount = productSum + packageSum;
+
+            // Create a PurchaseSummaryViewModel and populate its properties
+            var viewModel = new PurchaseSummaryViewModel
+            {
+                ProductPurchases = productPurchases,
+                PackagePurchases = packagePurchases,
+                ProductSum = productSum,
+                PackageSum = packageSum,
+                TotalAmount = totalAmount,
+            };
+
+            return View(viewModel);
+        }
 
 
 

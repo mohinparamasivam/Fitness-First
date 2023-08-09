@@ -1,0 +1,85 @@
+﻿@model Fitness_First.Models.PurchaseSummaryViewModel
+
+@{
+    ViewData["Title"] = "Purchase Summary";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <center><h1>Purchase by Members Summary</h1></center>
+    <br />
+
+    <!-- Top Part: Product Purchases -->
+    <h2>Product Purchases</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center">Purchase By</th>
+                <th class="text-center">Product Name</th>
+                <th class="text-center">Product Type</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Purchase Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through product purchases from the database -->
+            @foreach (var productPurchase in Model.ProductPurchases)
+            {
+                <tr>
+                    <td class="text-center">@productPurchase.PurchasedBy</td>
+                    <td class="text-center">@productPurchase.ProductName</td>
+                    <td class="text-center">@productPurchase.ProductType</td>
+                    <td class="text-center">@productPurchase.Quantity</td>
+                    <td class="text-center">RM @(productPurchase.ProductPrice * productPurchase.Quantity)</td>
+                    <td class="text-center">@productPurchase.PurchaseTime.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Display the sum of product prices -->
+    <div class="text-right">
+        <h5><b>Product Total: RM @Model.ProductSum</b></h5>
+    </div>
+
+    <!-- Bottom Part: Package Purchases -->
+    <h2>Package Purchases</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center">Member</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Package Name</th>
+                <th class="text-center">Package Price</th>
+                <th class="text-center">Enrollment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through package purchases from the database -->
+            @foreach (var packagePurchase in Model.PackagePurchases)
+            {
+                <tr>
+                    <td class="text-center">@packagePurchase.MemberName</td>
+                    <td class="text-center">@packagePurchase.MemberEmail</td>
+                    <td class="text-center">@packagePurchase.PackageName</td>
+                    <td class="text-center">RM @packagePurchase.PackagePrice</td>
+                    <td class="text-center">@packagePurchase.EnrolledAt.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Display the sum of package prices -->
+    <div class="text-right">
+        <h5><b>Package Total: RM @Model.PackageSum</b></h5>
+    </div>
+    <br />
+
+    <!-- Display the total sum to be paid -->
+    <div class="text-center">
+        <hr class="my-2"> <!-- Horizontal line -->
+        <h2><b>Total Revenue: RM @Model.TotalAmount</b></h2>
+        <hr class="my-2"> <!-- Horizontal line -->
+    </div>
+</div>
