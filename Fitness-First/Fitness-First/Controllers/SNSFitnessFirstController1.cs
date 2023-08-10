@@ -29,6 +29,7 @@ namespace Fitness_First.Controllers
             return keys;
         }
         //function 2: the page will be used to collect the user email and do the subscription for them
+        //Not Using
         public IActionResult Index() //subscribe SNS topics
         {
             return View();
