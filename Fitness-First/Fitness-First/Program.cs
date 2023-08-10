@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.XRay.Recorder.Handlers.AwsSdk;
+
+
 
 namespace Fitness_First
 {
