@@ -12,11 +12,45 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Amazon; //Connect to AWS Account 
+using Amazon.S3;
+using Amazon.S3.Model;
+using System.Net;
+using Microsoft.Extensions.Configuration;   //appsettings.json settings
+
+
+
 
 namespace Fitness_First.Controllers
 {
     public class AdminController : Controller
     {
+
+        //define S3 Bucket Name
+        public const string S3BucketName = "fitnessfirstbucket";
+
+        //connection string to AWS Account
+        private List<string> getKeys()
+        {
+            List<string> keys = new List<string>();
+
+            //link to appsettings.json get key values
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+            IConfigurationRoot configure = builder.Build(); //build json file
+
+            //read the key values
+
+            keys.Add(configure["Keys:key1"]);
+            keys.Add(configure["Keys:key2"]);
+            keys.Add(configure["Keys:key3"]);
+            return keys;
+        }
+
+
+
 
         //create variable for connection to db
         private readonly Fitness_FirstContext _dbContext;
@@ -45,30 +79,50 @@ namespace Fitness_First.Controllers
 
         //function to add Packages Data to database
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPackagesPostRequest(GymPackages gymPackages, IFormFile packagePicture)
         {
             if (ModelState.IsValid)
             {
                 try
-                {       //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+                {
                     if (packagePicture != null && packagePicture.Length > 0)
                     {
-                        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + packagePicture.FileName;
-                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        // Upload to S3 and generate URL to store in the database
+                        List<string> keys = getKeys();
+                        var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
 
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        // Upload to S3 Bucket
+                        PutObjectRequest uploadRequest = new PutObjectRequest
                         {
-                            await packagePicture.CopyToAsync(fileStream);
-                        }
+                            InputStream = packagePicture.OpenReadStream(),
+                            BucketName = S3BucketName,
+                            Key = "uploads/"+packagePicture.FileName,
+                            CannedACL = S3CannedACL.PublicRead
+                        };
 
-                        // Set the PackagePicturePath property before adding to the database
-                        gymPackages.PackagePicturePath = "~/uploads/" + uniqueFileName;
+                        // Send out the request to upload to S3
+                        PutObjectResponse putResponse = await awsS3client.PutObjectAsync(uploadRequest);
+
+                        if (putResponse.HttpStatusCode == HttpStatusCode.OK)
+                        {
+                            // The upload was successful
+                            string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/{packagePicture.FileName}";
+                            gymPackages.PackagePicturePath = s3ImageUrl;
+                        }
+                        else
+                        {
+                            // The upload failed
+                            ModelState.AddModelError("", "Failed to upload picture to S3.");
+                            return View("AddPackages", gymPackages);
+                        }
                     }
 
+                    // Add the gymPackages object to the context
                     _dbContext.GymPackages.Add(gymPackages);
+
+                    // Save changes to the database
                     await _dbContext.SaveChangesAsync();
+
                     return RedirectToAction("ViewPackages");
                 }
                 catch (Exception ex)
@@ -82,6 +136,7 @@ namespace Fitness_First.Controllers
 
             return View("AddPackages", gymPackages);
         }
+
 
 
         public IActionResult ViewPackages()
@@ -106,7 +161,7 @@ namespace Fitness_First.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPackagePostRequest(GymPackages updatedPackage,string deleteButton)
+        public async Task<IActionResult> EditPackagePostRequest(GymPackages updatedPackage, string deleteButton, IFormFile packagePicture)
         {
             if (ModelState.IsValid)
             {
@@ -119,18 +174,17 @@ namespace Fitness_First.Controllers
                         return NotFound();
                     }
 
-
-
                     if (!string.IsNullOrEmpty(deleteButton) && deleteButton == "delete")
                     {
+                        // Remove the picture from the S3 bucket
+                        await RemovePictureFromS3(existingPackage.PackagePicturePath);
+
                         _dbContext.GymPackages.Remove(existingPackage);
                         await _dbContext.SaveChangesAsync();
                         return RedirectToAction("ViewPackages");
                     }
-
                     else
                     {
-
                         existingPackage.PackageName = updatedPackage.PackageName;
                         existingPackage.PackagePrice = updatedPackage.PackagePrice;
                         existingPackage.InstructorName = updatedPackage.InstructorName;
@@ -143,16 +197,21 @@ namespace Fitness_First.Controllers
                         existingPackage.Session7 = updatedPackage.Session7;
                         existingPackage.Session8 = updatedPackage.Session8;
 
-                        //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+                        if (packagePicture != null && packagePicture.Length > 0)
+                        {
+                            // Remove the old picture from the S3 bucket
+                            await RemovePictureFromS3(existingPackage.PackagePicturePath);
 
-                        existingPackage.PackagePicturePath = "coach2.jpg"; // Set to the S3 bucket value
+                            // Upload the new picture to S3
+                            string newImageUrl = await UploadPictureToS3(packagePicture);
+                            existingPackage.PackagePicturePath = newImageUrl;
+                        }
 
                         _dbContext.GymPackages.Update(existingPackage);
                         await _dbContext.SaveChangesAsync();
                         return RedirectToAction("ViewPackages");
                     }
                 }
-
                 catch (Exception ex)
                 {
                     // Log the exception for debugging purposes
@@ -163,6 +222,46 @@ namespace Fitness_First.Controllers
             }
 
             return View("EditPackage", updatedPackage);
+        }
+
+        private async Task<string> UploadPictureToS3(IFormFile packagePicture)
+        {
+            List<string> keys = getKeys();
+            var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+
+            // Upload to S3 Bucket
+            string newFileName = packagePicture.FileName;
+            PutObjectRequest uploadRequest = new PutObjectRequest
+            {
+                InputStream = packagePicture.OpenReadStream(),
+                BucketName = S3BucketName,
+                Key = "uploads/" + newFileName,
+                CannedACL = S3CannedACL.PublicRead
+            };
+
+            await awsS3client.PutObjectAsync(uploadRequest);
+
+            // Return the new S3 image URL
+            return $"https://{S3BucketName}.s3.amazonaws.com/uploads/{newFileName}";
+        }
+
+        private async Task RemovePictureFromS3(string imageUrl)
+        {
+            if (!string.IsNullOrEmpty(imageUrl))
+            {
+                string objectKey = imageUrl.Substring(imageUrl.LastIndexOf('/') + 1);
+
+                List<string> keys = getKeys();
+                var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+
+                DeleteObjectRequest deleteRequest = new DeleteObjectRequest
+                {
+                    BucketName = S3BucketName,
+                    Key = "uploads/" + objectKey
+                };
+
+                await awsS3client.DeleteObjectAsync(deleteRequest);
+            }
         }
 
 
@@ -180,20 +279,40 @@ namespace Fitness_First.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {       //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+                {
+                    //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
                     if (productPicture != null && productPicture.Length > 0)
                     {
-                        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + productPicture.FileName;
-                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        // Upload to S3 and generate URL to store in the database
+                        List<string> keys = getKeys();
+                        var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
 
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        var uniqueFileName = productPicture.FileName;
+
+                        // Upload to S3 Bucket
+                        PutObjectRequest uploadRequest = new PutObjectRequest
                         {
-                            await productPicture.CopyToAsync(fileStream);
-                        }
+                            InputStream = productPicture.OpenReadStream(),
+                            BucketName = S3BucketName,
+                            Key = "uploads/" + uniqueFileName,
+                            CannedACL = S3CannedACL.PublicRead
+                        };
 
-                        // Set the PackagePicturePath property before adding to the database
-                        products.ProductPicturePath = "~/uploads/" + uniqueFileName;
+                        // Send out the request to upload to S3
+                        PutObjectResponse putResponse = await awsS3client.PutObjectAsync(uploadRequest);
+
+                        if (putResponse.HttpStatusCode == HttpStatusCode.OK)
+                        {
+                            // The upload was successful
+                            string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{uniqueFileName}";
+                            products.ProductPicturePath = s3ImageUrl;
+                        }
+                        else
+                        {
+                            // The upload failed
+                            ModelState.AddModelError("", "Failed to upload picture to S3.");
+                            return View("AddProducts", products);
+                        }
                     }
 
                     _dbContext.Products.Add(products);
@@ -236,7 +355,7 @@ namespace Fitness_First.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProductPostRequest(Products updatedProduct, string deleteButton)
+        public async Task<IActionResult> EditProductPostRequest(Products updatedProduct, string deleteButton, IFormFile productPicture)
         {
             if (ModelState.IsValid)
             {
@@ -249,32 +368,37 @@ namespace Fitness_First.Controllers
                         return NotFound();
                     }
 
-
-
                     if (!string.IsNullOrEmpty(deleteButton) && deleteButton == "delete")
                     {
+                        // Remove the picture from S3 bucket
+                        await RemovePictureFromS3(existingProduct.ProductPicturePath);
+
                         _dbContext.Products.Remove(existingProduct);
                         await _dbContext.SaveChangesAsync();
                         return RedirectToAction("ViewProducts");
                     }
-
                     else
                     {
-
                         existingProduct.ProductName = updatedProduct.ProductName;
                         existingProduct.ProductPrice = updatedProduct.ProductPrice;
                         existingProduct.ProductType = updatedProduct.ProductType;
 
-                        //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+                        if (productPicture != null && productPicture.Length > 0)
+                        {
+                            // Remove the old picture from S3 bucket
+                            await RemoveProductPictureFromS3(existingProduct.ProductPicturePath);
 
-                        existingProduct.ProductPicturePath = "redbull.jpeg"; // Set to the S3 bucket value
+                            // Upload new picture to S3 and update S3 URL
+                            string newImageUrl = await UploadProductPictureToS3(productPicture);
+
+                            existingProduct.ProductPicturePath = newImageUrl;
+                        }
 
                         _dbContext.Products.Update(existingProduct);
                         await _dbContext.SaveChangesAsync();
                         return RedirectToAction("ViewProducts");
                     }
                 }
-
                 catch (Exception ex)
                 {
                     // Log the exception for debugging purposes
@@ -285,6 +409,57 @@ namespace Fitness_First.Controllers
             }
 
             return View("EditProduct", updatedProduct);
+        }
+
+        private async Task<string> UploadProductPictureToS3(IFormFile productPicture)
+        {
+            List<string> keys = getKeys();
+            var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+
+            var uniqueFileName = productPicture.FileName;
+
+            // Upload to S3 Bucket
+            PutObjectRequest uploadRequest = new PutObjectRequest
+            {
+                InputStream = productPicture.OpenReadStream(),
+                BucketName = S3BucketName,
+                Key = "uploads/" + uniqueFileName,
+                CannedACL = S3CannedACL.PublicRead
+            };
+
+            // Send out the request to upload to S3
+            PutObjectResponse putResponse = await awsS3client.PutObjectAsync(uploadRequest);
+
+            if (putResponse.HttpStatusCode == HttpStatusCode.OK)
+            {
+                // The upload was successful
+                string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{uniqueFileName}";
+                return s3ImageUrl;
+            }
+            else
+            {
+                // The upload failed
+                return null;
+            }
+        }
+
+        private async Task RemoveProductPictureFromS3(string imageUrl)
+        {
+            if (!string.IsNullOrEmpty(imageUrl))
+            {
+                string objectKey = imageUrl.Substring(imageUrl.LastIndexOf('/') + 1);
+
+                List<string> keys = getKeys();
+                var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+
+                DeleteObjectRequest deleteRequest = new DeleteObjectRequest
+                {
+                    BucketName = S3BucketName,
+                    Key = "uploads/" + objectKey
+                };
+
+                await awsS3client.DeleteObjectAsync(deleteRequest);
+            }
         }
 
 
@@ -301,20 +476,15 @@ namespace Fitness_First.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {       //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+                {
+                    //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
                     if (equipmentPicture != null && equipmentPicture.Length > 0)
                     {
-                        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + equipmentPicture.FileName;
-                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        // Upload equipment picture to S3 and get the S3 URL
+                        string s3ImageUrl = await UploadEquipmentPictureToS3(equipmentPicture);
 
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await equipmentPicture.CopyToAsync(fileStream);
-                        }
-
-                        // Set the PackagePicturePath property before adding to the database
-                        equipments.EquipmentPicturePath = "~/uploads/" + uniqueFileName;
+                        // Set the EquipmentPicturePath property before adding to the database
+                        equipments.EquipmentPicturePath = s3ImageUrl;
                     }
 
                     _dbContext.GymEquipments.Add(equipments);
@@ -331,6 +501,38 @@ namespace Fitness_First.Controllers
             }
 
             return View("AddEquipments", equipments);
+        }
+
+        private async Task<string> UploadEquipmentPictureToS3(IFormFile equipmentPicture)
+        {
+            List<string> keys = getKeys();
+            var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+
+            var uniqueFileName = equipmentPicture.FileName;
+
+            // Upload to S3 Bucket
+            PutObjectRequest uploadRequest = new PutObjectRequest
+            {
+                InputStream = equipmentPicture.OpenReadStream(),
+                BucketName = S3BucketName,
+                Key = "uploads/" + uniqueFileName,
+                CannedACL = S3CannedACL.PublicRead
+            };
+
+            // Send out the request to upload to S3
+            PutObjectResponse putResponse = await awsS3client.PutObjectAsync(uploadRequest);
+
+            if (putResponse.HttpStatusCode == HttpStatusCode.OK)
+            {
+                // The upload was successful
+                string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{uniqueFileName}";
+                return s3ImageUrl;
+            }
+            else
+            {
+                // The upload failed
+                return null;
+            }
         }
 
 
@@ -409,7 +611,7 @@ namespace Fitness_First.Controllers
         }
 
 
-        public async Task<IActionResult> ViewPackageEnrollment(int id,string packagename)
+        public async Task<IActionResult> ViewPackageEnrollment(int id, string packagename)
         {
             var package = await _dbContext.GymPackages.FindAsync(id);
             if (package == null)

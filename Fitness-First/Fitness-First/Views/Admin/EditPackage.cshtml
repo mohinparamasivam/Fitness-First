@@ -27,7 +27,7 @@
 
 
 <div class="container mt-4">
-    <form method="post" asp-action="EditPackagePostRequest" enctype="multipart/form-data">
+    <form method="post" asp-action="EditPackagePostRequest" asp-controller="Admin" enctype="multipart/form-data">
         @Html.HiddenFor(model => model.PackageID)
 
         <div class="form-group">
@@ -55,7 +55,7 @@
 
         <div class="form-group">
             <label asp-for="PackagePicturePath"></label>
-            <input type="file" class="form-control-file" asp-for="PackagePicturePath" />
+            <input type="file" class="form-control-file" id="packagePicture" name="packagePicture" />
             <span asp-validation-for="PackagePicturePath"></span>
         </div>
 

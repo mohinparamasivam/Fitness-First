@@ -8,7 +8,7 @@
 <center><h1>Add New Equipment</h1></center>
 
 <div class="container mt-4">
-    <form method="post" asp-action="AddEquipmentsPostRequest" asp-asp-controller="AdminController">
+    <form method="post" asp-action="AddEquipmentsPostRequest" asp-controller="Admin" enctype="multipart/form-data">
         <div class="form-group">
             <label asp-for="EquipmentName"></label>
             <input class="form-control" asp-for="EquipmentName" />
@@ -35,7 +35,7 @@
 
         <div class="form-group">
             <label asp-for="EquipmentPicturePath"></label>
-            <input type="file" class="form-control-file" asp-for="EquipmentPicturePath" />
+            <input type="file" class="form-control-file" id="equipmentPicture" name="equipmentPicture" />
             <span asp-validation-for="EquipmentPicturePath"></span>
         </div>
 

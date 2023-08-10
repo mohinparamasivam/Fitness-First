@@ -27,7 +27,7 @@
 
 
 <div class="container mt-4">
-    <form method="post" asp-action="EditProductPostRequest" asp-asp-controller="AdminController">
+    <form method="post" asp-action="EditProductPostRequest" asp-controller="Admin" enctype="multipart/form-data">
         @Html.HiddenFor(model => model.ProductID)
         <div class="form-group">
             <label asp-for="ProductName"></label>
@@ -58,7 +58,7 @@
 
         <div class="form-group">
             <label asp-for="ProductPicturePath"></label>
-            <input type="file" class="form-control-file" asp-for="ProductPicturePath" />
+            <input type="file" class="form-control-file" id="productPicture" name="productPicture" />
             <span asp-validation-for="ProductPicturePath"></span>
         </div>
 

@@ -9,11 +9,11 @@
 <!-- Add your admin-specific content here -->
 
 <div class="container mt-4">
-    <form method="post" asp-action="AddPackagesPostRequest" asp-asp-controller="AdminController">
+    <form method="post" asp-action="AddPackagesPostRequest" asp-controller="Admin" enctype="multipart/form-data">
         <div class="form-group">
             <label asp-for="PackageName"></label>
-            <input class="form-control" asp-for="PackageName"/>
-            <span asp-asp-validation-for="PackageName"></span>
+            <input class="form-control" asp-for="PackageName" />
+            <span asp-validation-for="PackageName"></span>
         </div>
 
         <div class="form-group">
@@ -30,14 +30,15 @@
         <div class="form-group">
             <label asp-for="InstructorName"></label>
             <input class="form-control" asp-for="InstructorName" />
-            <span asp-asp-validation-for="PackagePrice"></span>
+            <span asp-validation-for="InstructorName"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="PackagePicturePath"></label>
-            <input type="file" class="form-control-file" asp-for="PackagePicturePath" />
+            <input type="file" class="form-control-file" id="packagePicture" name="packagePicture" />
             <span asp-validation-for="PackagePicturePath"></span>
         </div>
+
 
         <div class="form-group">
             <label>Time Slots <b>(8 Sessions Per Month):</b></label>
