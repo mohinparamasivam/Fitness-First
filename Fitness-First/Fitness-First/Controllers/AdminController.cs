@@ -106,7 +106,7 @@ namespace Fitness_First.Controllers
                         if (putResponse.HttpStatusCode == HttpStatusCode.OK)
                         {
                             // The upload was successful
-                            string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/{packagePicture.FileName}";
+                            string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{packagePicture.FileName}";
                             gymPackages.PackagePicturePath = s3ImageUrl;
                         }
                         else
@@ -477,7 +477,6 @@ namespace Fitness_First.Controllers
             {
                 try
                 {
-                    //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
                     if (equipmentPicture != null && equipmentPicture.Length > 0)
                     {
                         // Upload equipment picture to S3 and get the S3 URL
@@ -509,32 +508,54 @@ namespace Fitness_First.Controllers
             var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
 
             var uniqueFileName = equipmentPicture.FileName;
+            var objectKey = "uploads/" + uniqueFileName; // Modify the path as needed
 
-            // Upload to S3 Bucket
-            PutObjectRequest uploadRequest = new PutObjectRequest
+            using (var memoryStream = new MemoryStream())
             {
-                InputStream = equipmentPicture.OpenReadStream(),
-                BucketName = S3BucketName,
-                Key = "uploads/" + uniqueFileName,
-                CannedACL = S3CannedACL.PublicRead
-            };
+                await equipmentPicture.CopyToAsync(memoryStream);
 
-            // Send out the request to upload to S3
-            PutObjectResponse putResponse = await awsS3client.PutObjectAsync(uploadRequest);
+                PutObjectRequest uploadRequest = new PutObjectRequest
+                {
+                    InputStream = memoryStream,
+                    BucketName = S3BucketName,
+                    Key = objectKey,
+                    CannedACL = S3CannedACL.PublicRead
+                };
 
-            if (putResponse.HttpStatusCode == HttpStatusCode.OK)
-            {
-                // The upload was successful
-                string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{uniqueFileName}";
-                return s3ImageUrl;
-            }
-            else
-            {
-                // The upload failed
-                return null;
+                PutObjectResponse putResponse = await awsS3client.PutObjectAsync(uploadRequest);
+
+                if (putResponse.HttpStatusCode == HttpStatusCode.OK)
+                {
+                    // The upload was successful
+                    string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{uniqueFileName}";
+                    return s3ImageUrl;
+                }
+                else
+                {
+                    // The upload failed
+                    throw new Exception("Failed to upload picture to S3.");
+                }
             }
         }
 
+        private async Task RemoveEquipmentPictureFromS3(string imageUrl)
+        {
+            if (!string.IsNullOrEmpty(imageUrl))
+            {
+                string objectKey = imageUrl.Substring(imageUrl.LastIndexOf('/') + 1);
+
+                List<string> keys = getKeys();
+                var awsS3client = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+
+                DeleteObjectRequest deleteRequest = new DeleteObjectRequest
+                {
+                    BucketName = S3BucketName,
+                    Key = "uploads/" + objectKey // Modify the path as needed
+                };
+
+                await awsS3client.DeleteObjectAsync(deleteRequest);
+            }
+        }
 
         public IActionResult ViewEquipments()
         {
