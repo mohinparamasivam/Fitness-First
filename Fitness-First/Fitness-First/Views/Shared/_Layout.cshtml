@@ -85,14 +85,18 @@
 				<span>Subscribe For Newsletters</span>
 				Change for the better. Join now to enjoy our new membership offer and get 30 days free gym access.
 			</p>
-			<div class="footer-input-box">
-				<!-- Added div for the input box -->
-				<input type="email" placeholder="Enter your email" class="input-email"> <!-- Input box for email -->
-			</div>
-			<br />
-			<div class="footer-subscribe-button">
-				<button type="button" class="btn-subscribe">Subscribe</button>
-			</div>
+			<form asp-action="subscription" asp-controller="SNSFitnessFirstController1">
+
+				<div class="footer-input-box">
+					<!-- Added div for the input box -->
+					<input name="EmailId" type="email" placeholder="Enter your email" class="input-email"> <!-- Input box for email -->
+				</div>
+				<br />
+				<div class="footer-subscribe-button">
+					<button type="submit" class="btn-subscribe">Subscribe</button>
+
+				</div>
+			</form>
 			<div class="footer-icons">
 				<a href="#"><i class="fa fa-facebook"></i></a>
 				<a href="#"><i class="fa fa-twitter"></i></a>
