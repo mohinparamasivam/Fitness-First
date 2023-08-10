@@ -1,1 +1,1 @@
-web: ./Fitness-First
+web: dotnet exec ./Fitness-First.dll
