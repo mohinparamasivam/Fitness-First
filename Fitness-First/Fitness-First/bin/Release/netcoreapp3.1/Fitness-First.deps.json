@@ -31,6 +31,7 @@
     ".NETCoreApp,Version=v3.1": {
       "Fitness-First/1.0.0": {
         "dependencies": {
+          "AWSSDK.SimpleNotificationService": "3.7.200.14",
           "MailKit": "2.15.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.32",
           "Microsoft.AspNetCore.Identity.UI": "3.1.32",
@@ -305,6 +306,31 @@
         },
         "compile": {
           "Fitness-First.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.7.200.14": {
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.200.14"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/AWSSDK.Core.dll": {}
+        }
+      },
+      "AWSSDK.SimpleNotificationService/3.7.200.14": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.200.14"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.SimpleNotificationService.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.200.14"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/AWSSDK.SimpleNotificationService.dll": {}
         }
       },
       "MailKit/2.15.0": {
@@ -4001,6 +4027,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/3.7.200.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Yme3WHaUM4CtiI9JS5ilCXndp1jQVStWWjG3I+LwmWKcM9N74VNKA5m8aGU4IJ0AtKqjK0FDb1Ss5a+ndBdAqQ==",
+      "path": "awssdk.core/3.7.200.14",
+      "hashPath": "awssdk.core.3.7.200.14.nupkg.sha512"
+    },
+    "AWSSDK.SimpleNotificationService/3.7.200.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-I3/Lc5T4DCElGCMykuAFLyB8BkiOxB22nK+yrZoDbGKfI9jrORNnT98i+aResK8rW/+rKntpPeUfFv/TRgH8Ug==",
+      "path": "awssdk.simplenotificationservice/3.7.200.14",
+      "hashPath": "awssdk.simplenotificationservice.3.7.200.14.nupkg.sha512"
     },
     "MailKit/2.15.0": {
       "type": "package",
