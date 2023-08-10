@@ -12,6 +12,7 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
+using Amazon.XRay.Recorder.Handlers.AwsSdk;
 
 namespace Fitness_First
 {
@@ -27,6 +28,7 @@ namespace Fitness_First
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AWSSDKHandler.RegisterXRayForAllServices();
             services.AddControllersWithViews();
             services.AddRazorPages();
             // Configure Mailtrap as the email sender
