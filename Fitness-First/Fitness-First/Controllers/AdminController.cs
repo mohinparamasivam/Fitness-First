@@ -580,7 +580,7 @@ namespace Fitness_First.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditEquipmentPostRequest(GymEquipments updatedEquipment, string deleteButton)
+        public async Task<IActionResult> EditEquipmentPostRequest(GymEquipments updatedEquipment, string deleteButton, IFormFile equipmentPicture)
         {
             if (ModelState.IsValid)
             {
@@ -593,42 +593,47 @@ namespace Fitness_First.Controllers
                         return NotFound();
                     }
 
-
-
                     if (!string.IsNullOrEmpty(deleteButton) && deleteButton == "delete")
                     {
+                        // Remove the picture from S3 bucket
+                        await RemovePictureFromS3(existingEquipment.EquipmentPicturePath);
+
                         _dbContext.GymEquipments.Remove(existingEquipment);
                         await _dbContext.SaveChangesAsync();
                         return RedirectToAction("ViewEquipments");
                     }
-
                     else
                     {
-
                         existingEquipment.EquipmentName = updatedEquipment.EquipmentName;
                         existingEquipment.Quantity = updatedEquipment.Quantity;
                         existingEquipment.Availability = updatedEquipment.Availability;
 
-                        //LATER EDIT THIS CODE TO UPLOAD TO S3 BUCKET INSTEAD
+                        if (equipmentPicture != null && equipmentPicture.Length > 0)
+                        {
+                            // Remove the old picture from S3 bucket
+                            await RemoveProductPictureFromS3(existingEquipment.EquipmentPicturePath);
 
-                        existingEquipment.EquipmentPicturePath = "Dumbbell.png"; // Set to the S3 bucket value
+                            // Upload new picture to S3 and update S3 URL
+                            string newImageUrl = await UploadProductPictureToS3(equipmentPicture);
+
+                            existingEquipment.EquipmentPicturePath = newImageUrl;
+                        }
 
                         _dbContext.GymEquipments.Update(existingEquipment);
                         await _dbContext.SaveChangesAsync();
                         return RedirectToAction("ViewEquipments");
                     }
                 }
-
                 catch (Exception ex)
                 {
                     // Log the exception for debugging purposes
                     Console.WriteLine($"An error occurred: {ex.Message}");
                     ModelState.AddModelError("", "An error occurred while processing the form.");
-                    return View("EditEquipment", updatedEquipment);
+                    return View("EditEquipments", updatedEquipment);
                 }
             }
 
-            return View("EditEquipment", updatedEquipment);
+            return View("EditEquipments", updatedEquipment);
         }
 
 
