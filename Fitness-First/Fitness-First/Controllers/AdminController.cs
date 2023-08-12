@@ -106,7 +106,7 @@ namespace Fitness_First.Controllers
                         if (putResponse.HttpStatusCode == HttpStatusCode.OK)
                         {
                             // The upload was successful
-                            string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{packagePicture.FileName}";
+                            string s3ImageUrl = $"https://d3w54omocn56lm.cloudfront.net/uploads/{packagePicture.FileName}";
                             gymPackages.PackagePicturePath = s3ImageUrl;
                         }
                         else
@@ -242,7 +242,7 @@ namespace Fitness_First.Controllers
             await awsS3client.PutObjectAsync(uploadRequest);
 
             // Return the new S3 image URL
-            return $"https://{S3BucketName}.s3.amazonaws.com/uploads/{newFileName}";
+            return $"https://d3w54omocn56lm.cloudfront.net/uploads/{newFileName}";
         }
 
         private async Task RemovePictureFromS3(string imageUrl)
@@ -304,7 +304,7 @@ namespace Fitness_First.Controllers
                         if (putResponse.HttpStatusCode == HttpStatusCode.OK)
                         {
                             // The upload was successful
-                            string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{uniqueFileName}";
+                            string s3ImageUrl = $"https://d3w54omocn56lm.cloudfront.net/uploads/{uniqueFileName}";
                             products.ProductPicturePath = s3ImageUrl;
                         }
                         else
@@ -433,7 +433,7 @@ namespace Fitness_First.Controllers
             if (putResponse.HttpStatusCode == HttpStatusCode.OK)
             {
                 // The upload was successful
-                string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{uniqueFileName}";
+                string s3ImageUrl = $"https://d3w54omocn56lm.cloudfront.net/uploads/{uniqueFileName}";
                 return s3ImageUrl;
             }
             else
@@ -527,7 +527,7 @@ namespace Fitness_First.Controllers
                 if (putResponse.HttpStatusCode == HttpStatusCode.OK)
                 {
                     // The upload was successful
-                    string s3ImageUrl = $"https://{S3BucketName}.s3.amazonaws.com/uploads/{uniqueFileName}";
+                    string s3ImageUrl = $"https://d3w54omocn56lm.cloudfront.net/uploads/{uniqueFileName}";
                     return s3ImageUrl;
                 }
                 else
