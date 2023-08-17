@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "customizedMessage";
+}
+
+<center>
+    <h1>Admin Customized Message Broadcast to users</h1>
+    <br /><hr /><br />
+    <form asp-action="broadcastMessage" asp-action="SNSExample">
+        <label>Email Subject Title:</label>
+        &nbsp;&nbsp;
+        <input type="text" name="subjecttittle"
+            placeholder="Gym Close on Public Holiday3" />
+        <br /><br />
+        <textarea cols="150" rows="10" name="MessageContent"></textarea>
+        <br /><br />
+        <button type="Submit" class="btn-info">Send Message to Users Now!</button>
+    </form>
+</center>

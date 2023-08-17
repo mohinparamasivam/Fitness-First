@@ -7,6 +7,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using Amazon.S3.Encryption.Internal;
 
 namespace Fitness_First.Controllers
 {
@@ -62,9 +64,33 @@ namespace Fitness_First.Controllers
 
             return Content("Email Subscibed! :) ");
         }
+        //function 3: Let the admin to do a customized message to the users
+        public IActionResult customizedMessage()
+        {
+            return View();
+        }
+
+        //function 4: Send the broadcast message to the userrs
+        public async Task<IActionResult> broadcastMessage(string subjecttittle, string messageContent)
+        {
+            List<string> keys = getKeysInformation();
+            var snsClient = new AmazonSimpleNotificationServiceClient(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+            try
+            {
+                PublishRequest request = new PublishRequest
+                {
+                    TopicArn = topicARN,
+                    Subject = subjecttittle,
+                    Message = messageContent
+                };
+                await snsClient.PublishAsync(request);
+            }
+            catch(AmazonSimpleNotificationServiceException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Content("Message sent to the users!");
+        }
     }
-
-
-
 }
 
