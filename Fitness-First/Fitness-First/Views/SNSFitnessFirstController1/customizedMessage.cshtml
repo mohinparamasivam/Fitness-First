@@ -1,19 +1,67 @@
 ﻿
 @{
     ViewData["Title"] = "customizedMessage";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    body {
+        background-image: url('/images/background.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
 
+    .col-md-6 {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .box1 {
+        background-color: rgba(0,0,0,.5);
+        color: #fff;
+    }
+</style>
+
+<div class="wrapper">
+    <div class="box box1">
 <center>
+     <hr /><br />
     <h1>Admin Customized Message Broadcast to users</h1>
-    <br /><hr /><br />
-    <form asp-action="broadcastMessage" asp-action="SNSExample">
-        <label>Email Subject Title:</label>
-        &nbsp;&nbsp;
-        <input type="text" name="subjecttittle"
-            placeholder="Gym Close on Public Holiday3" />
-        <br /><br />
-        <textarea cols="150" rows="10" name="MessageContent"></textarea>
-        <br /><br />
-        <button type="Submit" class="btn-info">Send Message to Users Now!</button>
-    </form>
+    <br />
+            <form asp-action="broadcastMessage" asp-action="SNSExample" onsubmit="return validateForm()">
+                <label>Email Subject Title:</label>
+                &nbsp;&nbsp;
+                <input type="text" name="subjectTitle" id="subjectTitle"
+                       placeholder="Gym Closed on Public Holiday" required />
+                <br /><br />
+                <textarea cols="90" rows="10" name="MessageContent" id="messageContent" required></textarea>
+                <br /><br />
+                <button type="submit" class="btn-info">Send Message to Users Now!</button>
+                <br /><br />
+            </form>
 </center>
+    </div>
+</div>
+
+
+<script>
+    function validateForm() {
+        var subjectTitle = document.getElementById("subjectTitle").value;
+        var messageContent = document.getElementById("messageContent").value;
+
+        // Perform your validation checks here
+        if (subjectTitle.trim() === "") {
+            alert("Please enter a valid subject title.");
+            return false;
+        }
+
+        if (messageContent.trim() === "") {
+            alert("Please enter a message content.");
+            return false;
+        }
+
+        // Additional validation checks can be added
+
+        return true; // Form will be submitted if all checks pass
+    }
+</script>
